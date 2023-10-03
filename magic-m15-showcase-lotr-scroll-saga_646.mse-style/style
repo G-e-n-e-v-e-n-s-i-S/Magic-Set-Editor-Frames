@@ -145,8 +145,8 @@ init script:
 		else "As this Saga enters and after your draw step, add a lore counter. Sacrifice after " + chapter_number_map[number_of_chapters] + "."
 	}
 	
-	shrink_name :=	{ if styling.shrink_name_text == "-" then 0 else if styling.shrink_name_text != "" then to_number(styling.shrink_name_text) else 0 }
-	shrink_type :=	{ if styling.shrink_type_text == "-" then 0 else if styling.shrink_type_text != "" then to_number(styling.shrink_type_text) else 0 }
+	shrink_name :=	{ if styling.shrink_name_text == "-" then 0 else if styling.shrink_name_text != "" then clamp(to_number(styling.shrink_name_text), minimum: -40, maximum: 24) else 0 }
+	shrink_type :=	{ if styling.shrink_type_text == "-" then 0 else if styling.shrink_type_text != "" then clamp(to_number(styling.shrink_type_text), minimum: -40, maximum: 20) else 0 }
 	
 	use_main_rarity := { contains(set.mainframe_rarity_name, match: ".png") }
 	
