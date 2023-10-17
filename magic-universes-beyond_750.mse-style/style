@@ -33,7 +33,7 @@ card height:		1046
 card dpi:			300
 
 
-### blanks by Card Conjurer, Velvet Byrne and GenevensiS
+### blanks by Card Conjurer, Velvet Byrne, Rachel (the Touhou brainrot one) and GenevensiS
 ### code by GenevensiS
 
 
@@ -43,6 +43,12 @@ init script:
 	template_prefix := [card: "card/", pt: "pt/", crown: "crown/", identity: "/magic-identity-new.mse-include/", stamp: "stamp/", alias: "alias/", stampbackground: "stampbackground/"]
 	template_suffix := [card: "card.png", pt: "pt.png", crown: "crown.png", identity: "identity.png", stamp: "stamp.png", alias: "alias.png", stampbackground: "stampbackground.png"]
 	template :=
+	{
+		template_prefix[type] +
+		(if input == "c" and is_clear() then (if type == "card" then "cclear" else if type != "pt" then "a" else "c") else input) +
+		template_suffix[type]
+	}
+	land_template :=
 	{
 		template_prefix[type] +
 		(if input == "c" and is_clear() then (if type == "card" then "cclear" else if type != "pt" then "a" else "c") else input) +
@@ -97,7 +103,18 @@ init script:
 	
 	frame_alpha :=
 	{
-		if styling.opacity_percentage == "" then (if pure_colors(card.card_color) == "" and not contains(card.super_type, match:"Artifact") then 0.8 else 1.0)
+		if styling.opacity_percentage == "" then
+		(
+			if pure_colors(card.card_color) == ""
+			and	not contains(card.super_type, match:"Land")
+			and	not contains(card.super_type, match:"Artifact")
+			and	not contains(card.card_color, match:"artifact")
+			and	not contains(card.card_color, match:"land")
+			and	not contains(card.card_color, match:"hybrid")
+			and	not contains(card.card_color, match:"multicolor")
+			then 0.8
+			else 1.0
+		)
 		else if styling.opacity_percentage == "100" then 1.0
 		else clamp(to_number(styling.opacity_percentage)/100, minimum: 0.0, maximum: 1.0)
 	}
