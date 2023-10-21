@@ -39,14 +39,21 @@ card dpi:			297
 init script:
 	template_prefix :=
 	[
+		card:			"card/",
+		crown:			"crown/",
 		identity:		"/magic-identity-new.mse-include/"
 	]
 	template_suffix :=
 	[
+		card:			"card.png",
+		crown:			"crown.png",
 		identity:		"identity.png"
 	]
 	template			:= { template_prefix[type] + input + template_suffix[type] }
 	land_template		:= { template_prefix[type] + (if input == "a" then "c" else input) + template_suffix[type] }
+	
+	card_background		:= { color_background(input: card.card_color, type: "card",			base_hybrid: card_hybrid)		}@(offset:0 )
+	card_crown			:= { color_background(input: card.card_color, type: "crown",		base_hybrid: card_hybrid)		}@(offset:0 )
 	
 	mana_t :=
 	{
@@ -358,16 +365,16 @@ card style:
 		height:				1039
 		z index:			100
 		mask:				border_mask.png
-	#card color:
-	#	left:				0
-	#	top:				0
-	#	width:				744
-	#	height:				1039
-	#	z index:			210
-	#	popup style:		in place
-	#	render style:		image
-	#	image:				card.png
-	#	mask:				card_mask.png
+	card color:
+		left:				0
+		top:				0
+		width:				744
+		height:				1039
+		z index:			210
+		popup style:		in place
+		render style:		image
+		image:				{ card_background() }
+		mask:				card_mask.png
 	############################# Name line
 	name:
 		left:				63
@@ -613,13 +620,6 @@ extra card field:
 	choice:				artist arrow
 extra card field:
 	type:				choice
-	name:				card background
-	editable:			false
-	save value:			false
-	show statistics:	false
-	choice:				card background
-extra card field:
-	type:				choice
 	name:				crown
 	script:				card.card_color
 	editable:			false
@@ -717,14 +717,6 @@ extra card style:
 		z index:			1000
 		render style:		image
 		image:				{ recolor_image("artist_arrow.png", color: styling.copyright_text_color) }
-	card background:
-		left:				0
-		top:				0
-		width:				744
-		height:				1039
-		z index:			200
-		render style:		image
-		image:				card.png
 	crown:
 		left:				0
 		top:				0
@@ -733,7 +725,7 @@ extra card style:
 		z index:			310
 		visible:			{ is_crowned() }
 		render style:		image
-		image:				crown.png
+		image:				{ card_crown() }
 	pt box:
 		left:				0
 		top:				0
