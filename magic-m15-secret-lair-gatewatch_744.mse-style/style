@@ -897,7 +897,7 @@ card style:
 			separator color:	red
 	loyalty:
 		left:				563
-		top:				{ 735 + move_baseball() }
+		top:				{ 736 + move_baseball() }
 		width:				{ if styling.stats_type == "Loyalty" then 127 else 0 }
 		height:				62
 		z index:			1020
