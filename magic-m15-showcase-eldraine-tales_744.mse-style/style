@@ -436,7 +436,7 @@ card style:
 		left:				0
 		top:				{ if styling.stretch_image_to_whole_card then 0 else 56 }
 		width:				744
-		height:				{ if styling.stretch_image_to_whole_card then 1039 else if get_alpha(styling.textbox_opacity_percentage, default: 70) < 1.0 then 956 else 691 }
+		height:				{ if styling.stretch_image_to_whole_card then 1039 else if get_alpha(styling.textbox_opacity_percentage, default: 70) <= 0.995 then 956 else 691 }
 		z index:			0
 	mainframe image:
 		left:				{ popout_left() }

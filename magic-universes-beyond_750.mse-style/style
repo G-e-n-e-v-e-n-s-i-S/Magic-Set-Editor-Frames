@@ -118,7 +118,7 @@ init script:
 		else if styling.opacity_percentage == "100" then 1.0
 		else clamp(to_number(styling.opacity_percentage)/100, minimum: 0.0, maximum: 1.0)
 	}
-	is_clear := { frame_alpha() < 1.0 }
+	is_clear := { frame_alpha() <= 0.995 }
 	clear_mask :=
 	{
 		grey := frame_alpha() * 255
