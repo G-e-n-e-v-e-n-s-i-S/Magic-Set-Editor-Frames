@@ -1,7 +1,7 @@
 ﻿mse version:		2.0.0
 game:				magic
-short name:			Universes Beyond
-full name:			Hi-Res Showcase
+short name:			UB Main
+full name:			Universes Beyond
 icon:				card_sample.png
 position hint:		095
 
@@ -125,11 +125,11 @@ init script:
 		combine_blend(image1: recolor_image("clear_mask.png", color: rgb(grey,grey,grey)), image2: if is_crowned() then "opaque_crown_mask.png" else "opaque_mask.png", combine: "add")
 	}
 	
-	chop_top := { split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" then max(min(split.0,1500),-1500) else 0 }
-	chop_bot := { split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" then max(min(split.1,1500),-1500) else 0 }
+	chop_top :=		{ split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(to_number(split.0), maximum:1000, minimum:-1000) else 0 }
+	chop_bottom :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(to_number(split.1), maximum:1000, minimum:-1000) else 0 }
 	
-	shrink_type := { if styling.shrink_typeline_text != "" then to_number(styling.shrink_typeline_text) else 0 }
-	shrink_name := { if styling.shrink_name_text != "" then to_number(styling.shrink_name_text) else 0 }
+	shrink_type := { if styling.shrink_type_text != "" and styling.shrink_type_text != "-" then clamp(to_number(styling.shrink_type_text), maximum:24, minimum:-40) else 0 }
+	shrink_name := { if styling.shrink_name_text != "" and styling.shrink_name_text != "-" then clamp(to_number(styling.shrink_name_text), maximum:28, minimum:-40) else 0 }
 	
 	use_main_rarity := { contains(set.mainframe_rarity_name, match: ".png") }
 	
@@ -169,20 +169,20 @@ init script:
 		)
 	}
 	
-	rarity_right :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 0 and split.0 != "" then max(min(split.0,1000),0) else 687 }
-	rarity_top :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 1 and split.1 != "" then max(min(split.1,1500),0) else 593 }
-	rarity_size :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 2 and split.2 != "" then max(min(split.2,1500),0) else 52 }
+	rarity_right :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(split.0, maximum:1000, minimum:0) else 687 }
+	rarity_top :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(split.1, maximum:1500, minimum:0) else 593 }
+	rarity_size :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 2 and split.2 != "" and split.2 != "-" then clamp(split.2, maximum:1500, minimum:0) else 52 }
 	rarity_left :=	{ rarity_right() - rarity_size() }
 	
-	popout_left :=		{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.0 != "" then max(min(split.0,1500),-500) else 0 }
-	popout_top :=		{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.1 != "" then max(min(split.1,2000),-500) else 0 }
-	popout_width :=		{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.2 != "" then max(min(split.2,1500),0) else 0 }
-	popout_height :=	{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.3 != "" then max(min(split.3,2000),0) else 0 }
+	popout_left :=		{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.0 != "" and split.0 != "-" then clamp(split.0, maximum:1500, minimum:-500) else 0 }
+	popout_top :=		{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.1 != "" and split.1 != "-" then clamp(split.1, maximum:2000, minimum:-500) else 0 }
+	popout_width :=		{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.2 != "" and split.2 != "-" then clamp(split.2, maximum:1500, minimum:0) else 0 }
+	popout_height :=	{ split := split_comma(styling.popout_image_coordinates); if length(split) > 3 and split.3 != "" and split.3 != "-" then clamp(split.3, maximum:2000, minimum:0) else 0 }
 	
 	split_comma := split_text@(match: " *, *")
 	
 	un_png := replace@(match:".png", replace: "")
-
+	
 	special_text2 := { value }
 	
 	clamp :=
@@ -222,7 +222,7 @@ styling field:
 	description:	Shrinks name X pixels.
 styling field:
 	type:			text
-	name:			shrink typeline text
+	name:			shrink type text
 	description:	Shrinks type X pixels.
 styling field:
 	type:			text
@@ -241,36 +241,6 @@ styling field:
 	choice:			never
 	initial:		never
 styling field:
-	type:			boolean
-	name:			use ancestral mana symbols
-	description:	Enables ancestral's modified generic mana.
-	initial:		no
-styling field:
-	type:			boolean
-	name:			use guild mana symbols
-	description:	Use the Ravnica guild symbols instead of the official half/half circles for hybrid mana.
-	initial:		no
-styling field:
-	type:			choice
-	name:			tap symbol
-	description:	What tap and untap symbols should be used on cards?
-	choice:			modern
-	choice:			old
-	choice:			diagonal T
-	initial:		modern
-styling field:
-	type:			package choice
-	name:			casting cost mana symbols
-	description:	Symbols used in the casting cost.
-	match:			magic-mana-*.mse-symbol-font
-	initial:		magic-mana-large.mse-symbol-font
-styling field:
-	type:			package choice
-	name:			text box mana symbols
-	description:	Symbols used in the rule text and flavor text.
-	match:			magic-mana-*.mse-symbol-font
-	initial:		magic-mana-small.mse-symbol-font
-styling field:
 	type:			choice
 	name:			PT color scheme
 	description:	Use the selected color scheme for the PT box on two color cards
@@ -278,19 +248,6 @@ styling field:
 	choice:			hybrid
 	choice:			blend
 	initial:		gold
-styling field:
-	type:			boolean
-	name:			inverted common symbol
-	description:	Should the common rarity symbol be inverted, like in Coldsnap?
-	initial:		no
-styling field:
-	type:			text
-	name:			alt rarity color
-	description:	Use a custom color for the rarity symbol. Formatted as "R1,G1,B1:R2,G2,B2:..." 1 and 2 are fill color, 3 and 4 border color
-styling field:
-	type:			text
-	name:			rarity coordinates
-	description:	The coordinates for the set symbol, formatted as "right,top,size". Default is 687,593,52.
 styling field:
 	type:			choice
 	name:			legend crown
@@ -339,6 +296,12 @@ styling field:
 	choice:			no
 	initial:		yes, un/commons not foil
 styling field:
+	type:			package choice
+	name:			overlay
+	description:	Should there be an overlay applied, such as foil?
+	match:			magic-overlay-*.mse-include
+	required:		false
+styling field:
 	type:			choice
 	name:			corners
 	description:	What should the corners of the card look like?
@@ -346,6 +309,19 @@ styling field:
 	choice:			rounded
 	choice:			none
 	initial:		rounded and antialiased
+styling field:
+	type:			boolean
+	name:			inverted common symbol
+	description:	Should the common rarity symbol be inverted, like in Coldsnap?
+	initial:		no
+styling field:
+	type:			text
+	name:			alt rarity color
+	description:	Use a custom color for the rarity symbol. Formatted as "R1,G1,B1:R2,G2,B2:..." 1 and 2 are fill color, 3 and 4 border color
+styling field:
+	type:			text
+	name:			rarity coordinates
+	description:	The coordinates for the set symbol, formatted as "right,top,size". Default is 687,593,52.
 styling field:
 	type:			boolean
 	name:			remove from autocount
@@ -365,11 +341,47 @@ styling field:
 	initial:		white
 	allow custom:	true
 styling field:
+	type:			boolean
+	name:			use ancestral mana symbols
+	description:	Enables ancestral's modified generic mana.
+	initial:		no
+styling field:
+	type:			boolean
+	name:			use guild mana symbols
+	description:	Use the Ravnica guild symbols instead of the official half/half circles for hybrid mana.
+	initial:		no
+styling field:
+	type:			choice
+	name:			tap symbol
+	description:	What tap and untap symbols should be used on cards?
+	choice:			modern
+	choice:			old
+	choice:			diagonal T
+	initial:		modern
+styling field:
 	type:			package choice
-	name:			overlay
-	description:	Should there be an overlay applied, such as foil?
-	match:			magic-overlay-*.mse-include
-	required:		false
+	name:			casting cost mana symbols
+	description:	Symbols used in the casting cost.
+	match:			magic-mana-*.mse-symbol-font
+	initial:		magic-mana-large.mse-symbol-font
+styling field:
+	type:			package choice
+	name:			text box mana symbols
+	description:	Symbols used in the rule text and flavor text.
+	match:			magic-mana-*.mse-symbol-font
+	initial:		magic-mana-small.mse-symbol-font
+styling field:
+	type:			text
+	name:			name font
+	description:	Font used for the name and type. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
+styling field:
+	type:			text
+	name:			text font
+	description:	Font used for the rule text. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
+styling field:
+	type:			text
+	name:			text italic font
+	description:	Font used for the flavor text and reminder texts. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
 styling style:
 	use guild mana symbols:
 		choice images:
@@ -423,7 +435,7 @@ card style:
 		z index:			300
 		alignment:			middle left shrink-overflow
 		font:
-			name:				Beleren Bold
+			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
 			size:				{ 30 - shrink_name() }
 			color:				black
 	casting cost:
@@ -461,7 +473,6 @@ card style:
 		width:				{ if styling.stretch_image_to_whole_card then 750	else if is_clear() then 690	else 636 }
 		height:				{ if styling.stretch_image_to_whole_card then 1046	else if is_clear() then 938	else 464 }
 		z index:			0
-		mask:				{ if styling.stretch_image_to_whole_card then "image_mask_full.png" else "" }
 	mainframe image:
 		left:				{ popout_left() }
 		top:				{ popout_top() }
@@ -486,7 +497,7 @@ card style:
 		z index:			110
 		alignment:			middle left shrink-overflow
 		font:
-			name:				Beleren Bold
+			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
 			size:				{ 26 - shrink_type() }
 			color:				black
 			separator color:	red
@@ -541,7 +552,7 @@ card style:
 		left:				59
 		top:				{ 660 + chop_top() }
 		right:				691
-		bottom:				{ 962 - chop_bot() }
+		bottom:				{ 962 - chop_bottom() }
 		z index:			100
 		padding left:		5
 		padding right:		5
@@ -560,8 +571,8 @@ card style:
 				then "middle center"
 				else "middle left"
 		font:
-			name:				MPlantin
-			italic name:		MPlantin-Italic
+			name:				{ if styling.text_font == "" then "MPlantin" else styling.text_font }
+			italic name:		{ if styling.text_italic_font == "" then "MPlantin-Italic" else styling.text_italic_font }
 			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 28 }
 			scale down to:		14
 			color:				black
@@ -665,12 +676,26 @@ extra card field:
 		then forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
 		else combined_editor(field1: card.custom_card_number, separator: (if card.custom_card_number != "" then " " else "") + rarity_code() + " ", field2: card.card_code_text)
 extra card field:
+	type:				text
+	name:				auto copyright
+	script:				set.copyright
+	editable:			false
+	save value:			false
+	show statistics:	false
+extra card field:
 	type:				choice
 	name:				artist arrow
 	editable:			false
 	save value:			false
 	show statistics:	false
 	choice:				artist arrow
+extra card field:
+	type:				choice
+	name:				flavor bar
+	editable:			false
+	save value:			false
+	show statistics:	false
+	choice:				flavor bar
 extra card field:
 	type:				choice
 	name:				pt box
@@ -688,6 +713,13 @@ extra card field:
 extra card field:
 	type:				choice
 	name:				crown
+	script:				card.card_color
+	editable:			false
+	save value:			false
+	show statistics:	false
+extra card field:
+	type:				choice
+	name:				crown clear shadow
 	script:				card.card_color
 	editable:			false
 	save value:			false
@@ -720,20 +752,6 @@ extra card field:
 	save value:			false
 	show statistics:	false
 	choice:				vehicle overlay
-extra card field:
-	type:				text
-	name:				auto copyright
-	script:				set.copyright
-	editable:			false
-	save value:			false
-	show statistics:	false
-extra card field:
-	type:				choice
-	name:				flavor bar
-	editable:			false
-	save value:			false
-	show statistics:	false
-	choice:				flavor bar
 extra card field:
 	type:				choice
 	name:				card stamp background
@@ -820,7 +838,7 @@ extra card style:
 				count := length(pure)
 				if is_vehicle() then "vpt.png"
 				else if styling.PT_color_scheme == "gold" and count > 1 then template("m", type: "pt")
-				else if styling.PT_color_scheme == "hybrid" and count == 2 then masked_blend(mask: "blend_pt.png", dark: template(pure.0, type: "pt"), light: template(pure.1, type: "pt"))
+				else if styling.PT_color_scheme == "hybrid" and count == 2 then masked_blend(mask: "special_blend_pt.png", dark: template(pure.0, type: "pt"), light: template(pure.1, type: "pt"))
 				else card_ptbox()
 	foil layer:
 		left:				0
@@ -868,6 +886,15 @@ extra card style:
 		visible:			{ is_crowned() }
 		render style:		image
 		image:				{ card_crown() }
+	crown clear shadow:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			41
+		visible:			{ is_crowned() and is_clear() }
+		render style:		image
+		image:				shadow_clear_crown.png
 	crown border:
 		left:				0
 		top:				0
