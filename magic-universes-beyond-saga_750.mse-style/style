@@ -1406,7 +1406,7 @@ extra card style:
 		top:				0
 		width:				750
 		height:				1046
-		z index:			40
+		z index:			41
 		visible:			{ is_crowned() }
 		render style:		image
 		image:				{ card_crown() }
@@ -1415,7 +1415,7 @@ extra card style:
 		top:				0
 		width:				750
 		height:				1046
-		z index:			41
+		z index:			42
 		visible:			{ is_crowned() and is_clear() }
 		render style:		image
 		image:				shadow_clear_crown.png
@@ -1424,8 +1424,8 @@ extra card style:
 		top:				0
 		width:				750
 		height:				1046
-		z index:			41
-		visible:			{ card.border_color != rgb(0,0,0) and is_crowned() }
+		z index:			40
+		visible:			{ is_crowned() }
 		mask:				crown_border_mask.png
 	card stamp border:
 		left:				0
