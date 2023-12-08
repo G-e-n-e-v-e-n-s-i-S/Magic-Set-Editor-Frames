@@ -98,7 +98,7 @@ init script:
 	card_pinline :=			{ color_background(input: card.card_color, type: "pinline",												base_hybrid: card_hybrid)		}@(offset:0 )
 	card_stampholofoil :=
 	{
-		if card.card_stamp == "none" then "" else
+		if not is_stamped() then "" else
 		"holofoil/" +
 		card.card_stamp +
 		(if is_foil_stamped() then "" else "_void") +
@@ -702,7 +702,7 @@ card style:
 		z index:			720
 		render style:		image
 		popup style:		in place
-		image:				{ if is_stamped() then card_stampholofoil() else "" }
+		image:				{ card_stampholofoil() }
 		mask:				mask_stamp_holofoil.png
 	set code:
 		left:				24

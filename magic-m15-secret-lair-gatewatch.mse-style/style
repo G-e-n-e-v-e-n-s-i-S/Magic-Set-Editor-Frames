@@ -80,7 +80,7 @@ init script:
 	card_logo			:= { color_background(input: card.card_color, type: "logo",		base_hybrid: card_hybrid) }@(offset:0)
 	card_stampholofoil	:=
 	{
-		if card.card_stamp == "none" then "" else (
+		if not is_stamped() then "" else (
 		prefix :=	if card.card_stamp == "universes beyond" then "holofoil/standard"
 					else "holofoil/" + card.card_stamp
 		prefix + (if is_foil_stamped() then ".png" else "_void.png"))
@@ -937,7 +937,7 @@ card style:
 		z index:			720
 		render style:		image
 		popup style:		in place
-		image:				{ if is_stamped() then card_stampholofoil() else "" }
+		image:				{ card_stampholofoil() }
 		mask:				mask_stamp_holofoil.png
 	set code:
 		left:				24

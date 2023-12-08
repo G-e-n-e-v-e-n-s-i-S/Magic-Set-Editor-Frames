@@ -1,4 +1,4 @@
-﻿mse version:		2.0.0
+﻿mse version:		2.1.2
 game:				magic
 short name:			Ixalan
 full name:			Showcase
@@ -50,7 +50,7 @@ init script:
 	card_ptbox :=		{ color_background(input: card.card_color, type: "pt",		base_hybrid: card_hybrid)		}@(offset:0 )
 	card_stampholofoil :=
 	{
-		if card.card_stamp == "none" then "" else
+		if not is_stamped() then "" else
 		"holofoil/" +
 		card.card_stamp +
 		(if is_foil_stamped() then "" else "_void") +
