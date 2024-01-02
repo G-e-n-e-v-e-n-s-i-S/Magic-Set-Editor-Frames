@@ -479,7 +479,11 @@ styling field:
 styling field:
 	type:			text
 	name:			name font
-	description:	Font used for the name and type. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
+	description:	Font used for the name text. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
+styling field:
+	type:			text
+	name:			type font
+	description:	Font used for the type text. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
 styling field:
 	type:			text
 	name:			text font
@@ -542,7 +546,7 @@ card style:
 		z index:			300
 		alignment:			{ if styling.center_name then "middle center shrink-overflow" else "middle left shrink-overflow" }
 		font:
-			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
+			name:				{ if styling.name_font == "" then "Beleren Small Caps Bold" else styling.name_font }
 			size:				{ 30 - shrink_name() }
 			color:				{ styling.name_text_color }
 	casting cost:
@@ -604,7 +608,7 @@ card style:
 		z index:			110
 		alignment:			middle left shrink-overflow
 		font:
-			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
+			name:				{ if styling.type_font == "" then "Beleren Bold" else styling.type_font }
 			size:				{ 26 - shrink_type() }
 			color:				{ styling.type_text_color }
 			separator color:	red
