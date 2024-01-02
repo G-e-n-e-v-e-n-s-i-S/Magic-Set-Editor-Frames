@@ -1108,7 +1108,7 @@ extra card style:
 		width:				750
 		height:				1046
 		z index:			31
-		visible:			{ move_typeline() < 200 and styling.border != "no" }
+		visible:			{ styling.border != "no" }
 		mask:				{ if is_stamped() then "stamp_border_mask.png" else "nonstamp_border_mask.png" }
 	corners:
 		left:				0
