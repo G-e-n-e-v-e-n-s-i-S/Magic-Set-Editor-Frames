@@ -120,7 +120,7 @@ init script:
 	
 	move_typeline :=
 	{
-		clamp(if styling.move_typeline == "-" then 0 else to_int(styling.move_typeline), minimum: -800, maximum: 345)
+		clamp(if styling.move_typeline == "-" then 0 else to_int(styling.move_typeline), minimum: -800, maximum: 343)
 	}
 	
 	move_pt :=
@@ -992,6 +992,7 @@ extra card style:
 		width:				750
 		height:				1046
 		z index:			37
+		visible:			{ move_typeline() < 343 }
 		render style:		image
 		image:				{ set_alpha(card_typeline(), alpha: get_alpha(styling.typeline_opacity_percentage, default: 70)) }
 	typeline pinlines:
@@ -1000,6 +1001,7 @@ extra card style:
 		width:				750
 		height:				1046
 		z index:			36
+		visible:			{ move_typeline() < 343 }
 		render style:		image
 		image:				{ card_typeline_pinlines() }
 	textbox:
