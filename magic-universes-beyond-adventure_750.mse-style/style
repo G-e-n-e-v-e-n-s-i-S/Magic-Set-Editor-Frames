@@ -773,7 +773,7 @@ card style:
 	watermark:
 		left:				376
 		top:				676
-		width:				329
+		width:				335
 		height:				271
 		z index:			29
 		render style:		image
