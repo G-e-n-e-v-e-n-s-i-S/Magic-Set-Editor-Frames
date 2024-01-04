@@ -190,6 +190,9 @@ init script:
 	chop_top :=		{ split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(to_number(split.0), maximum:1000, minimum:-1000) else 0 }
 	chop_bottom :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(to_number(split.1), maximum:1000, minimum:-1000) else 0 }
 	
+	chop_adventure_top :=		{ split := split_comma(styling.chop_adventure_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(to_number(split.0), maximum:1000, minimum:-1000) else 0 }
+	chop_adventure_bottom :=	{ split := split_comma(styling.chop_adventure_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(to_number(split.1), maximum:1000, minimum:-1000) else 0 }
+	
 	shrink_type := { if styling.shrink_type_text != "" and styling.shrink_type_text != "-" then clamp(to_number(styling.shrink_type_text), maximum:24, minimum:-40) else 0 }
 	shrink_name := { if styling.shrink_name_text != "" and styling.shrink_name_text != "-" then clamp(to_number(styling.shrink_name_text), maximum:28, minimum:-40) else 0 }
 	
@@ -307,15 +310,31 @@ styling field:
 styling field:
 	type:			text
 	name:			rule text font cap
-	description:	Caps the font size of the rules text and the flavor text. Default is 28.
+	description:	Caps the font size of the rules text and the flavor text. Default is 26.
+styling field:
+	type:			text
+	name:			adventure rule text font cap
+	description:	Caps the font size of the adventure rules text and the adventure flavor text. Default is 24.
 styling field:
 	type:			text
 	name:			chop rule textbox
 	description:	Formatted as "X,Y". Shrinks textbox X pixels from the top and Y from the bottom.
 styling field:
+	type:			text
+	name:			chop adventure rule textbox
+	description:	Formatted as "X,Y". Shrinks adventure textbox X pixels from the top and Y from the bottom.
+styling field:
 	type:			choice
 	name:			center rule text
 	description:	When to center text (short text means only on one-line cards with no flavor text)
+	choice:			always
+	choice:			short text only
+	choice:			never
+	initial:		never
+styling field:
+	type:			choice
+	name:			center adventure rule text
+	description:	When to center adventure text (short text means only on one-line cards with no flavor text)
 	choice:			always
 	choice:			short text only
 	choice:			never
@@ -625,7 +644,7 @@ card style:
 		top:				591
 		right:				{ if set.shorten_types_for_rarity then max(375,min(rarity_left()-7,687)) else 687 }
 		height:				54
-		z index:			110
+		z index:			111
 		alignment:			middle left shrink-overflow
 		font:
 			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
@@ -637,7 +656,7 @@ card style:
 		top:				710
 		right:				362
 		height:				32
-		z index:			110
+		z index:			111
 		alignment:			middle left shrink-overflow
 		font:
 			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
@@ -723,9 +742,9 @@ card style:
 			scale down to:		14
 	text 2:
 		left:				62
-		top:				755
+		top:				{ 755 + chop_adventure_top() }
 		right:				358
-		bottom:				956
+		bottom:				{ 956 - chop_adventure_bottom() }
 		z index:			100
 		line height hard:	{ if is_modal(card.rule_text_2) then 0.9 else 1.2 }
 		line height line:	1.5
@@ -734,22 +753,22 @@ card style:
 		line height line max:	1.6
 		alignment:
 			script:
-				if (styling.center_rule_text == "short text only" and
+				if (styling.center_adventure_rule_text == "short text only" and
 				   not contains(match:"\n", card.rule_text_2) and
 				   card.flavor_text_2 == "<i-flavor></i-flavor>" and
 				   card_style.text_2.content_lines <= 2) or
-				   styling.center_rule_text == "always"
+				   styling.center_adventure_rule_text == "always"
 				then "middle center"
 				else "middle left"
 		font:
 			name:				{ if styling.text_font == "" then "MPlantin" else styling.text_font }
 			italic name:		{ if styling.text_italic_font == "" then "MPlantin-Italic" else styling.text_italic_font }
-			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 24 }
+			size:				{ if styling.adventure_rule_text_font_cap != "" then to_number(styling.adventure_rule_text_font_cap) else 24 }
 			scale down to:		14
 			color:				black
 		symbol font:
 			name:				{ styling.text_box_mana_symbols }
-			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 24 }
+			size:				{ if styling.adventure_rule_text_font_cap != "" then to_number(styling.adventure_rule_text_font_cap) else 24 }
 			scale down to:		14
 	watermark:
 		left:				376
