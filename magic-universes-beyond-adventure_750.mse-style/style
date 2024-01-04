@@ -1,6 +1,6 @@
 ﻿mse version:		2.0.0
 game:				magic
-short name:			UB Token
+short name:			UB Adventure
 full name:			Universes Beyond
 icon:				card_sample.png
 position hint:		095
@@ -33,71 +33,96 @@ card height:		1046
 card dpi:			300
 
 
-### blanks by Card Conjurer, Velvet Byrne, Rachel (the Touhou brainrot one), Fungustober and GenevensiS
+### blanks by Card Conjurer, Velvet Byrne, Rachel (the Touhou brainrot one) and GenevensiS
 ### code by GenevensiS
 
 
 ############################################################## Extra scripts
 
 init script:
-	card_shape := { "token" }
+	card_shape := { "adventure" }
+	
+	# adventure version of card hybrid
+	adventure_hybrid_cell :=
+	{
+		do_linear_blend	:= linear_blend
+		linear_blend :=
+		{
+			do_linear_blend(
+				x1: 0.457*x1 + 0.048,
+				x2: 0.457*x2 + 0.048,
+				y1: 0.304*y1 + 0.62,
+				y2: 0.304*y2 + 0.62
+			)
+		}
+		card_hybrid[shape][color_count]()
+	}
+	adventure_hybrid_row :=
+	[
+		0: adventure_hybrid_cell
+		1: adventure_hybrid_cell
+		2: adventure_hybrid_cell
+		3: adventure_hybrid_cell
+		4: adventure_hybrid_cell
+		5: adventure_hybrid_cell
+		6: adventure_hybrid_cell
+		7: adventure_hybrid_cell
+	]
+	adventure_hybrid :=
+	[
+		radial:		adventure_hybrid_row
+		horizontal:	adventure_hybrid_row
+		vertical:	adventure_hybrid_row
+		overlay:	adventure_hybrid_row
+	]
 	
 	template_prefix :=
 	[
-		alias:				"alias/",
-		textbox:			"textbox/",
-		textboxpinlines:	"textboxpinlines/",
+		card:				"card/",
+		bookleft:			"bookleft/",
+		bookright:			"bookright/",
+		pt:					"pt/",
 		crown:				"crown/",
-		nameline:			"nameline/",
+		identity:			"/magic-identity-new.mse-include/",
+		identity2:			"/magic-identity-new.mse-include/",
+		alias:				"alias/",
 		stamp:				"stamp/",
-		nonstamp:			"nonstamp/",
-		stampbackground:	"stampbackground/",
-		nonstampbackground:	"nonstampbackground/",
-		identity:			"/magic-identity-new.mse-include/"
+		nonstamp:			"nonstamp/"
 	]
 	template_suffix :=
 	[
-		alias:				"alias.png",
-		textbox:			"textbox.png",
-		textboxpinlines:	"textboxpinlines.png",
+		card:				"card.png",
+		bookleft:			"bookleft.png",
+		bookright:			"bookright.png",
+		pt:					"pt.png",
 		crown:				"crown.png",
-		nameline:			"nameline.png",
+		identity:			"identity.png",
+		identity2:			"identity.png",
+		alias:				"alias.png",
 		stamp:				"stamp.png",
-		nonstamp:			"nonstamp.png",
-		stampbackground:	"stampbackground.png",
-		nonstampbackground:	"nonstampbackground.png",
-		identity:			"identity.png"
+		nonstamp:			"nonstamp.png"
 	]
 	template :=
 	{
-		if		type == "nameline_pinlines"	then crop_safe("pinlines/" + input + "pinlines.png",	width: 750, height: 1046, offset_x: 0, offset_y: 1000)
-		else if	type == "typeline_pinlines"	then crop_safe("pinlines/" + input + "pinlines.png",	width: 750, height: 1046, offset_x: 0, offset_y: 345-move_typeline())
-		else if	type == "typeline"			then crop_safe("typeline/" + input + "typeline.png",	width: 750, height: 1046, offset_x: 0, offset_y: 345-move_typeline())
-		else if	type == "pt"				then crop_safe("pt/" + input + "pt.png",				width: 750, height: 1046, offset_x: 0, offset_y: 1000-move_pt())
-		else template_prefix[type] + input + template_suffix[type]
+		template_prefix[type] +
+		(if input == "c" and is_clear() then (if type == "card" then "cclear" else if type != "pt" and not contains(type, match: "book") then "a" else "c") else input) +
+		template_suffix[type]
 	}
 	land_template :=
 	{
-		if		type == "nameline_pinlines"	then crop_safe("pinlines/" + input + "pinlines.png",	width: 750, height: 1046, offset_x: 0, offset_y: 1000)
-		else if	type == "typeline_pinlines"	then crop_safe("pinlines/" + input + "pinlines.png",	width: 750, height: 1046, offset_x: 0, offset_y: 345-move_typeline())
-		else if	type == "typeline"			then crop_safe("typeline/" + input + "typeline.png",	width: 750, height: 1046, offset_x: 0, offset_y: 345-move_typeline())
-		else if	type == "pt"				then crop_safe("pt/" + input + "pt.png",				width: 750, height: 1046, offset_x: 0, offset_y: 1000-move_pt())
-		else template_prefix[type] + input + template_suffix[type]
+		template_prefix[type] +
+		(if input == "c" and is_clear() then (if type == "card" then "cclear" else if type != "pt" then "a" else "c") else input) +
+		template_suffix[type]
 	}
 	
-	card_alias :=				{ color_background(input: card.card_color, type: "alias",				base_hybrid: card_hybrid)		}@(offset:0 )
-	card_textbox :=				{ color_background(input: card.card_color, type: "textbox",				base_hybrid: card_hybrid)		}@(offset:0 )
-	card_textboxpinlines :=		{ color_background(input: card.card_color, type: "textboxpinlines",		base_hybrid: card_hybrid)		}@(offset:0 )
-	card_ptbox :=				{ color_background(input: card.card_color, type: "pt",					base_hybrid: card_hybrid)		}@(offset:0 )
-	card_crown :=				{ color_background(input: card.card_color, type: "crown",				base_hybrid: card_hybrid)		}@(offset:0 )
-	card_nameline :=			{ color_background(input: card.card_color, type: "nameline",			base_hybrid: card_hybrid)		}@(offset:0 )
-	card_typeline :=			{ color_background(input: card.card_color, type: "typeline",			base_hybrid: card_hybrid)		}@(offset:0 )
-	card_nameline_pinlines :=	{ color_background(input: card.card_color, type: "nameline_pinlines",	base_hybrid: card_hybrid)		}@(offset:0 )
-	card_typeline_pinlines :=	{ color_background(input: card.card_color, type: "typeline_pinlines",	base_hybrid: card_hybrid)		}@(offset:0 )
-	card_stamp :=				{ color_background(input: card.card_color, type: "stamp",				base_hybrid: card_hybrid)		}@(offset:0 )
-	card_nonstamp :=			{ color_background(input: card.card_color, type: "nonstamp",			base_hybrid: card_hybrid)		}@(offset:0 )
-	card_stampbackground :=		{ color_background(input: card.card_color, type: "stampbackground",		base_hybrid: card_hybrid)		}@(offset:0 )
-	card_nonstampbackground :=	{ color_background(input: card.card_color, type: "nonstampbackground",	base_hybrid: card_hybrid)		}@(offset:0 )
+	card_background :=			{ color_background(input: card.card_color,		type: "card",				base_hybrid: card_hybrid)		}@(offset:0 )
+	card_bookleft :=			{ color_background(input: card.card_color_2,	type: "bookleft",			base_hybrid: adventure_hybrid)	}@(offset:0 )
+	card_bookright :=			{ color_background(input: card.card_color,		type: "bookright",			base_hybrid: card_hybrid)		}@(offset:0 )
+	card_alias :=				{ color_background(input: card.card_color,		type: "alias",				base_hybrid: card_hybrid)		}@(offset:0 )
+	card_crown :=				{ color_background(input: card.card_color,		type: "crown",				base_hybrid: card_hybrid)		}@(offset:0 )
+	card_ptbox :=				{ color_background(input: card.card_color,		type: "pt",					base_hybrid: card_hybrid)		}@(offset:0 )
+	card_stamp :=				{ color_background(input: card.card_color,		type: "stamp",				base_hybrid: card_hybrid)		}@(offset:0 )
+	card_nonstamp :=			{ color_background(input: card.card_color,		type: "nonstamp",			base_hybrid: card_hybrid)		}@(offset:0 )
 	
 	pure_colors :=
 	{
@@ -111,23 +136,6 @@ init script:
 		)
 	}
 	
-	card_mask :=
-	{
-		move := 345-move_typeline()
-		if move < 0 or move > 1999 then "card_mask.png"
-		else combine_blend(image1:crop_safe("card_mask_typeline.png", width: 750, height: 1046, offset_x: 0, offset_y: move), image2:"card_mask.png", combine: "add")
-	}
-	
-	move_typeline :=
-	{
-		clamp(if styling.move_typeline == "-" then 0 else to_int(styling.move_typeline), minimum: -800, maximum: 343)
-	}
-	
-	move_pt :=
-	{
-		clamp(if styling.move_pt == "-" then 0 else to_int(styling.move_pt), minimum: -1000, maximum: 150)
-	}
-	
 	mana_t :=
 	{
 		if      styling.tap_symbol == "old"        then "old"
@@ -138,7 +146,7 @@ init script:
 	ancestral_mana := { styling.use_ancestral_mana_symbols }
 	
 	has_identity := { styling.color_indicator_dot }
-	has_identity_2 := { false }
+	has_identity_2 := { styling.adventure_color_indicator_dot }
 	
 	is_promo := { styling.promo }
 	
@@ -151,12 +159,42 @@ init script:
 	
 	is_crowned := { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and contains(card.super_type, match:"Legendary")) }
 	
+	is_land := { styling.land_frame == "yes" or (styling.land_frame == "if land" and contains(card.super_type, match:"Land")) }
+	
+	is_vehicle := { styling.vehicle_frame == "yes" or (styling.vehicle_frame == "if vehicle" and contains(card.sub_type, match:"Vehicle")) }
+	
+	frame_alpha :=
+	{
+		if styling.opacity_percentage == "" then
+		(
+			if pure_colors(card.card_color) == ""
+			and	not contains(card.super_type, match:"Land")
+			and	not contains(card.super_type, match:"Artifact")
+			and	not contains(card.card_color, match:"artifact")
+			and	not contains(card.card_color, match:"land")
+			and	not contains(card.card_color, match:"hybrid")
+			and	not contains(card.card_color, match:"multicolor")
+			then 0.8
+			else 1.0
+		)
+		else if styling.opacity_percentage == "100" then 1.0
+		else clamp(to_number(styling.opacity_percentage)/100, minimum: 0.0, maximum: 1.0)
+	}
+	is_clear := { frame_alpha() <= 0.995 }
+	clear_mask :=
+	{
+		grey := frame_alpha() * 255
+		combine_blend(image1: recolor_image("clear_mask.png", color: rgb(grey,grey,grey)), image2: if is_crowned() then "opaque_crown_mask.png" else "opaque_mask.png", combine: "add")
+	}
+	
 	chop_top :=		{ split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(to_number(split.0), maximum:1000, minimum:-1000) else 0 }
 	chop_bottom :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(to_number(split.1), maximum:1000, minimum:-1000) else 0 }
-	chop_right :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 2 and split.2 != "" and split.2 != "-" then clamp(to_number(split.2), maximum:500, minimum:-500) else 0 }
 	
 	shrink_type := { if styling.shrink_type_text != "" and styling.shrink_type_text != "-" then clamp(to_number(styling.shrink_type_text), maximum:24, minimum:-40) else 0 }
 	shrink_name := { if styling.shrink_name_text != "" and styling.shrink_name_text != "-" then clamp(to_number(styling.shrink_name_text), maximum:28, minimum:-40) else 0 }
+	
+	shrink_adventure_type := { if styling.shrink_adventure_type_text != "" and styling.shrink_adventure_type_text != "-" then clamp(to_number(styling.shrink_adventure_type_text), maximum:24, minimum:-40) else 0 }
+	shrink_adventure_name := { if styling.shrink_adventure_name_text != "" and styling.shrink_adventure_name_text != "-" then clamp(to_number(styling.shrink_adventure_name_text), maximum:28, minimum:-40) else 0 }
 	
 	use_main_rarity := { contains(set.mainframe_rarity_name, match: ".png") }
 	
@@ -196,8 +234,8 @@ init script:
 		)
 	}
 	
-	rarity_right :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(split.0, maximum:1000, minimum:0) else 688 }
-	rarity_top :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(split.1, maximum:1500, minimum:0) else 708+move_typeline() }
+	rarity_right :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(split.0, maximum:1000, minimum:0) else 687 }
+	rarity_top :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(split.1, maximum:1500, minimum:0) else 593 }
 	rarity_size :=	{ split := split_comma(styling.rarity_coordinates); if length(split) > 2 and split.2 != "" and split.2 != "-" then clamp(split.2, maximum:1500, minimum:0) else 52 }
 	rarity_left :=	{ rarity_right() - rarity_size() }
 	
@@ -210,13 +248,13 @@ init script:
 	
 	un_png := replace@(match:".png", replace: "")
 	
-	get_alpha :=
+	special_text2 := { value }
+	
+	bar_equation2 :=
 	{
-		alpha_value :=	if input == "" then default
-						else to_number(input) or else default
-		if alpha_value < 0 then 0.0
-		else if alpha_value <= 100 then alpha_value/100.0
-		else 1.0
+		if card_style.text_2.layout.blocks[1].bottom or else 0 > 0
+		then card_style.text_2.top + 0.5*(card_style.text_2.layout.blocks[0].bottom+card_style.text_2.layout.blocks[1].top)
+		else old_bar_equation()
 	}
 	
 	clamp :=
@@ -225,32 +263,6 @@ init script:
 		else if input > maximum then maximum
 		else input
 	}
-	
-	crop_safe :=
-	{
-		if		offset_x < 0
-			or	offset_y < 0
-			or	width <= 0
-			or	height <= 0
-			or	offset_x + width > 750
-			or	offset_y + height > 3046
-		then ""
-		else crop(input, offset_x: offset_x, offset_y: offset_y, width: width, height: height)
-	}
-	
-	text_alignment :=
-	{
-		if	(			styling.center_rule_text == "short text only"
-				and not	contains(match:"\n", card.rule_text)
-				and		card.flavor_text == "<i-flavor></i-flavor>"
-				and		card_style.text.content_lines <= 2
-			)
-			or	styling.center_rule_text == "always"
-		then "middle center"
-		else "middle left"
-	}
-	
-	special_text2 := { value }
 
 
 ############################################################## Set info fields
@@ -281,14 +293,25 @@ styling field:
 	name:			shrink name text
 	description:	Shrinks name X pixels.
 styling field:
-	type:			boolean
-	name:			center name
-	description:	Center the name text on the card?
-	initial:		yes
+	type:			text
+	name:			shrink adventure name text
+	description:	Shrinks adventure name X pixels.
 styling field:
 	type:			text
 	name:			shrink type text
 	description:	Shrinks type X pixels.
+styling field:
+	type:			text
+	name:			shrink adventure type text
+	description:	Shrinks adventure type X pixels.
+styling field:
+	type:			text
+	name:			rule text font cap
+	description:	Caps the font size of the rules text and the flavor text. Default is 28.
+styling field:
+	type:			text
+	name:			chop rule textbox
+	description:	Formatted as "X,Y". Shrinks textbox X pixels from the top and Y from the bottom.
 styling field:
 	type:			choice
 	name:			center rule text
@@ -296,23 +319,7 @@ styling field:
 	choice:			always
 	choice:			short text only
 	choice:			never
-	initial:		always
-styling field:
-	type:			text
-	name:			chop rule textbox
-	description:	Chops the top, bottom, and right edges of the rule textbox by this many pixels. Formatted as "1,2,3"
-styling field:
-	type:			text
-	name:			rule text font cap
-	description:	The font size of rule text can't become greater than this. Default is 26.
-styling field:
-	type:			text
-	name:			move typeline
-	description:	Move the typeline down this many pixels. Use negatives to move up. Can be moved off of the card. 204 for saga height, -115 for normal nontoken height.
-styling field:
-	type:			text
-	name:			move pt
-	description:	Move the pt box down this many pixels. Use negatives to move up.
+	initial:		never
 styling field:
 	type:			choice
 	name:			PT color scheme
@@ -320,7 +327,7 @@ styling field:
 	choice:			gold
 	choice:			hybrid
 	choice:			blend
-	initial:		blend
+	initial:		gold
 styling field:
 	type:			choice
 	name:			legend crown
@@ -330,50 +337,25 @@ styling field:
 	choice:			no
 	initial:		if legendary
 styling field:
-	type:			text
-	name:			nameline opacity percentage
-	description:	Set the opacity percentage for the nameline. Opaque is 100, transparent is 0. Default is 100.
+	type:			choice
+	name:			vehicle frame
+	description:	Use the vehicle frame overlay?
+	choice:			yes
+	choice:			if vehicle
+	choice:			no
+	initial:		if vehicle
+styling field:
+	type:			choice
+	name:			land frame
+	description:	Use the land frame overlay?
+	choice:			yes
+	choice:			if land
+	choice:			no
+	initial:		if land
 styling field:
 	type:			text
-	name:			typeline opacity percentage
-	description:	Set the opacity percentage for the typeline. Opaque is 100, transparent is 0. Default is 100.
-styling field:
-	type:			text
-	name:			textbox opacity percentage
-	description:	Set the opacity percentage for the rules textbox. Opaque is 100, transparent is 0. Default is 80.
-styling field:
-	type:			color
-	name:			name text color
-	description:	Use the specified color for the text in the nameline.
-	choice:
-		name:			black
-		color:			rgb(0,0,0)
-	choice:
-		name:			white
-		color:			rgb(255,255,255)
-	initial:		black
-styling field:
-	type:			color
-	name:			type text color
-	description:	Use the specified color for the text in the typeline.
-	choice:
-		name:			black
-		color:			rgb(0,0,0)
-	choice:
-		name:			white
-		color:			rgb(255,255,255)
-	initial: black
-styling field:
-	type:			color
-	name:			rule text color
-	description:	Use the specified color for the rule and flavor text.
-	choice:
-		name:			black
-		color:			rgb(0,0,0)
-	choice:
-		name:			white
-		color:			rgb(255,255,255)
-	initial:		black
+	name:			opacity percentage
+	description:	Use a clear frame with the given opacity. Default is 80 for colorless non-artifact cards, and 100 for all other cards.
 styling field:
 	type:			boolean
 	name:			flavor bar
@@ -383,6 +365,11 @@ styling field:
 	type:			boolean
 	name:			color indicator dot
 	description:	Use a dot in the typeline to indicate card color?
+	initial:		no
+styling field:
+	type:			boolean
+	name:			adventure color indicator dot
+	description:	Use a dot in the typeline of the adventure to indicate card color?
 	initial:		no
 styling field:
 	type:			choice
@@ -399,14 +386,6 @@ styling field:
 	description:	Should there be an overlay applied, such as foil?
 	match:			magic-overlay-*.mse-include
 	required:		false
-styling field:
-	type:			choice
-	name:			border
-	description:	Use a border?
-	choice:			yes
-	choice:			only copyright
-	choice:			no
-	initial:		yes
 styling field:
 	type:			choice
 	name:			corners
@@ -427,7 +406,7 @@ styling field:
 styling field:
 	type:			text
 	name:			rarity coordinates
-	description:	The coordinates for the set symbol, formatted as "right,top,size". Default is 688,708,52.
+	description:	The coordinates for the set symbol, formatted as "right,top,size". Default is 687,593,52.
 styling field:
 	type:			boolean
 	name:			remove from autocount
@@ -479,11 +458,7 @@ styling field:
 styling field:
 	type:			text
 	name:			name font
-	description:	Font used for the name text. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
-styling field:
-	type:			text
-	name:			type font
-	description:	Font used for the type text. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
+	description:	Font used for the name and type. Hover your mouse over the font file to see it's details in a yellow popup, and write it's Title here.
 styling field:
 	type:			text
 	name:			text font
@@ -524,31 +499,51 @@ card style:
 		top :				0
 		width:				750
 		height:				1046
-		z index:			9
-		visible:			{ styling.border != "no" }
-		mask:				{ "border" + (if styling.border == "only copyright" then "_borderless" else "") + (if move_typeline() > 220 then "_textless" else "") + "_mask.png" }
+		z index:			11
+		mask:				border_mask.png
 	card color:
 		left:				0
 		top:				0
 		width:				750
 		height:				1046
-		z index:			10
+		z index:			5
 		render style:		image
 		popup style:		in place
-		image:				card.png
-		mask:				{ card_mask() }
+		image:				{ card_background() }
+		mask:				{ if is_clear() then clear_mask() else "card_mask.png" }
+	card color 2:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			8
+		render style:		image
+		popup style:		in place
+		image:				{ card_bookleft() }
+		mask:				adventure_mask.png
 	############################# Name line
 	name:
-		left:				{ 64 + (if styling.center_name and card_style.casting_cost.content_width != 0 then card_style.casting_cost.content_width + 7 else 0) }
+		left:				64
 		top:				54
 		right:				{ 686 - (if card_style.casting_cost.content_width == 0 then 0 else card_style.casting_cost.content_width + 7) }
 		height:				52
 		z index:			300
-		alignment:			{ if styling.center_name then "middle center shrink-overflow" else "middle left shrink-overflow" }
+		alignment:			middle left shrink-overflow
 		font:
-			name:				{ if styling.name_font == "" then "Beleren Small Caps Bold" else styling.name_font }
+			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
 			size:				{ 30 - shrink_name() }
-			color:				{ styling.name_text_color }
+			color:				black
+	name 2:
+		left:				63
+		top:				660
+		right:				{ 360 - (if card_style.casting_cost_2.content_width == 0 then 0 else card_style.casting_cost_2.content_width + 7) }
+		height:				41
+		z index:			300
+		alignment:			middle left shrink-overflow
+		font:
+			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
+			size:				{ 24 - shrink_adventure_name() }
+			color:				white
 	casting cost:
 		right:				693
 		top:				54
@@ -560,10 +555,26 @@ card style:
 		font:
 			name:				MPlantin
 			size:				30
-			color:				{ styling.name_text_color }
+			color:				black
 		symbol font:
 			name:				{ styling.casting_cost_mana_symbols }
 			size:				30
+			#alignment:			middle right
+	casting cost 2:
+		right:				360
+		top:				660
+		width:				{ max(50, card_style.casting_cost_2.content_width + 12) }
+		height:				42
+		z index:			310
+		alignment:			middle right
+		always symbol:		true
+		font:
+			name:				MPlantin
+			size:				26
+			color:				white
+		symbol font:
+			name:				{ styling.casting_cost_mana_symbols }
+			size:				26
 			#alignment:			middle right
 	alias:
 		left:				108
@@ -579,10 +590,10 @@ card style:
 			weight:				bold
 	############################# Image
 	image:
-		left:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0		else if styling.border != "yes" then 0		else 30 }
-		top:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0		else if styling.border != "yes" then 0		else if get_alpha(styling.nameline_opacity_percentage, default: 70) > 0.98 and styling.border == "yes" and is_crowned() then 114 else 29 }
-		width:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 750		else if styling.border != "yes" then 750	else 690 }
-		height:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 1046	else if styling.border != "yes"	then 973	else if get_alpha(styling.nameline_opacity_percentage, default: 70) > 0.98 and styling.border == "yes" and is_crowned() then 859 else 944 }
+		left:				{ if styling.stretch_image_to_whole_card then 0		else if is_clear() then 30	else 57 }
+		top:				{ if styling.stretch_image_to_whole_card then 0		else if is_clear() then 29	else 118 }
+		width:				{ if styling.stretch_image_to_whole_card then 750	else if is_clear() then 690	else 636 }
+		height:				{ if styling.stretch_image_to_whole_card then 1046	else if is_clear() then 938	else 464 }
 		z index:			0
 	mainframe image:
 		left:				{ popout_left() }
@@ -593,24 +604,45 @@ card style:
 	############################# Card type
 	indicator:
 		left:				60
-		top:				{ 718 + move_typeline() }
+		top:				603
 		width:				34
 		height:				34
 		z index:			110
 		render style:		image
 		visible:			{ has_identity() }
 		image:				{ card_identity() }
+	indicator 2:
+		left:				59
+		top:				713
+		width:				27
+		height:				27
+		z index:			110
+		render style:		image
+		visible:			{ has_identity_2() }
+		image:				{ card_identity_2(input: card.card_color_2) }
 	type:
 		left:				{ if has_identity() then 100 else 63 }
-		top:				{ 706 + move_typeline() }
+		top:				591
 		right:				{ if set.shorten_types_for_rarity then max(375,min(rarity_left()-7,687)) else 687 }
 		height:				54
 		z index:			110
 		alignment:			middle left shrink-overflow
 		font:
-			name:				{ if styling.type_font == "" then "Beleren Bold" else styling.type_font }
+			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
 			size:				{ 26 - shrink_type() }
-			color:				{ styling.type_text_color }
+			color:				black
+			separator color:	red
+	type 2:
+		left:				{ if has_identity_2() then 93 else 64 }
+		top:				710
+		right:				362
+		height:				32
+		z index:			110
+		alignment:			middle left shrink-overflow
+		font:
+			name:				{ if styling.name_font == "" then "Beleren Bold" else styling.name_font }
+			size:				{ 23 - shrink_adventure_type() }
+			color:				white
 			separator color:	red
 	rarity:
 		right:				{ rarity_right() }
@@ -660,13 +692,11 @@ card style:
 					else symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 	############################# Text box
 	text:
-		left:				59
-		top:				{ max(779 + move_typeline() + chop_top(), if card.alias == "" then 126 else 154) }
-		right:				{ 691 - chop_right() }
-		bottom:				{ (if is_stamped() then 948 else 959) - chop_bottom() }
+		left:				398
+		top:				{ 664 + chop_top() }
+		right:				697
+		bottom:				{ 957 - chop_bottom() }
 		z index:			100
-		padding left:		5
-		padding right:		5
 		line height hard:	{ if is_modal(card.rule_text) then 0.9 else 1.2 }
 		line height line:	1.5
 		line height soft:	0.9
@@ -684,19 +714,59 @@ card style:
 		font:
 			name:				{ if styling.text_font == "" then "MPlantin" else styling.text_font }
 			italic name:		{ if styling.text_italic_font == "" then "MPlantin-Italic" else styling.text_italic_font }
-			size:				{ if styling.rule_text_font_cap != "" then clamp(to_number(styling.rule_text_font_cap), minimum: 2, maximum: 300) else 26 }
+			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 26 }
 			scale down to:		14
-			color:				{ styling.rule_text_color }
+			color:				black
 		symbol font:
 			name:				{ styling.text_box_mana_symbols }
-			size:				{ if styling.rule_text_font_cap != "" then clamp(to_number(styling.rule_text_font_cap), minimum: 2, maximum: 300) else 26 }
+			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 26 }
+			scale down to:		14
+	text 2:
+		left:				62
+		top:				755
+		right:				358
+		bottom:				956
+		z index:			100
+		line height hard:	{ if is_modal(card.rule_text_2) then 0.9 else 1.2 }
+		line height line:	1.5
+		line height soft:	0.9
+		line height hard max:	{ if is_modal(card.rule_text_2) then 1.0 else 1.3 }
+		line height line max:	1.6
+		alignment:
+			script:
+				if (styling.center_rule_text == "short text only" and
+				   not contains(match:"\n", card.rule_text_2) and
+				   card.flavor_text_2 == "<i-flavor></i-flavor>" and
+				   card_style.text_2.content_lines <= 2) or
+				   styling.center_rule_text == "always"
+				then "middle center"
+				else "middle left"
+		font:
+			name:				{ if styling.text_font == "" then "MPlantin" else styling.text_font }
+			italic name:		{ if styling.text_italic_font == "" then "MPlantin-Italic" else styling.text_italic_font }
+			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 24 }
+			scale down to:		14
+			color:				black
+		symbol font:
+			name:				{ styling.text_box_mana_symbols }
+			size:				{ if styling.rule_text_font_cap != "" then to_number(styling.rule_text_font_cap) else 24 }
 			scale down to:		14
 	watermark:
-		left:				20
-		top:				{ move := move_typeline(); if move > -115 then 774 + move else 659 + (move+115)/2 }
-		right:				730
-		bottom:				{ move := move_typeline(); if move > -115 then 948 else 948 + (move+115)/2 }
-		z index:			32
+		left:				376
+		top:				676
+		width:				329
+		height:				271
+		z index:			29
+		render style:		image
+		popup style:		in place
+		alignment:			middle center
+		include file:		/magic-watermarks.mse-include/watermarks
+	watermark 2:
+		left:				48
+		top:				760
+		width:				327
+		height:				193
+		z index:			29
 		render style:		image
 		popup style:		in place
 		alignment:			middle center
@@ -704,15 +774,15 @@ card style:
 	############################# PT
 	pt:
 		left:				599
-		top:				{ 941 + move_pt() }
+		top:				941
 		width:				93
 		height:				43
-		z index:			121
+		z index:			100
 		alignment:			center middle shrink-overflow
 		font:
 			name:				Beleren Bold
 			size:				30
-			color:				black
+			color:				{ if is_vehicle() then "white" else "black" }
 			separator color:	red
 	############################# Copyright stuff
 	card stamp:
@@ -720,7 +790,7 @@ card style:
 		top:				0
 		width:				750
 		height:				1046
-		z index:			32
+		z index:			53
 		render style:		image
 		popup style:		in place
 		image:				{ if is_stamped() then (if is_foil_stamped() then "stamp_foil.png" else "stamp_non_foil.png") else "" }
@@ -809,53 +879,11 @@ extra card field:
 	choice:				flavor bar
 extra card field:
 	type:				choice
-	name:				nameline
-	script:				card.card_color
+	name:				flavor bar 2
 	editable:			false
 	save value:			false
 	show statistics:	false
-extra card field:
-	type:				choice
-	name:				nameline pinlines
-	script:				card.card_color
-	editable:			false
-	save value:			false
-	show statistics:	false
-extra card field:
-	type:				choice
-	name:				typeline
-	script:				card.card_color
-	editable:			false
-	save value:			false
-	show statistics:	false
-extra card field:
-	type:				choice
-	name:				typeline pinlines
-	script:				card.card_color
-	editable:			false
-	save value:			false
-	show statistics:	false
-extra card field:
-	type:				choice
-	name:				textbox
-	script:				card.card_color
-	editable:			false
-	save value:			false
-	show statistics:	false
-extra card field:
-	type:				choice
-	name:				textbox pinlines
-	script:				card.card_color
-	editable:			false
-	save value:			false
-	show statistics:	false
-extra card field:
-	type:				choice
-	name:				textbox pinlines shadow
-	script:				card.card_color
-	editable:			false
-	save value:			false
-	show statistics:	false
+	choice:				flavor bar 2
 extra card field:
 	type:				choice
 	name:				pt box
@@ -878,6 +906,13 @@ extra card field:
 	save value:			false
 	show statistics:	false
 extra card field:
+	type:				choice
+	name:				crown clear shadow
+	script:				card.card_color
+	editable:			false
+	save value:			false
+	show statistics:	false
+extra card field:
 	type:				color
 	name:				crown border
 	script:				card.border_color
@@ -893,21 +928,21 @@ extra card field:
 	choice:				foil layer
 extra card field:
 	type:				choice
-	name:				card stamp pinlines
-	script:				card.card_color
+	name:				land overlay
 	editable:			false
 	save value:			false
 	show statistics:	false
+	choice:				land overlay
 extra card field:
 	type:				choice
-	name:				card stamp pinlines shadow
-	script:				card.card_color
+	name:				vehicle overlay
 	editable:			false
 	save value:			false
 	show statistics:	false
+	choice:				vehicle overlay
 extra card field:
 	type:				choice
-	name:				card stamp background
+	name:				book right
 	script:				card.card_color
 	editable:			false
 	save value:			false
@@ -919,6 +954,20 @@ extra card field:
 	editable:			false
 	save value:			false
 	show statistics:	false
+extra card field:
+	type:				choice
+	name:				card stamp rim
+	editable:			false
+	save value:			false
+	show statistics:	false
+	choice:				card stamp rim
+extra card field:
+	type:				choice
+	name:				card stamp rim shadow
+	editable:			false
+	save value:			false
+	show statistics:	false
+	choice:				card stamp rim shadow
 extra card field:
 	type:				color
 	name:				corners
@@ -962,89 +1011,38 @@ extra card style:
 		render style:		image
 		image:				{ recolor_image("artist_arrow.png", color: styling.copyright_text_color) }
 	flavor bar:
-		left:				76
+		left:				394
 		top:				{ bar_equation() + 1 }
-		width:				598
+		right:				688
 		height:				5
-		z index:			90
+		z index:			20
 		visible:			{ styling.flavor_bar and card.rule_text != "" and remove_tags(card.flavor_text) != "" }
 		render style:		image
 		image:				flavor_bar.png
-	nameline:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			35
+	flavor bar 2:
+		left:				62
+		top:				{ bar_equation2() + 1 }
+		right:				356
+		height:				4
+		z index:			20
+		visible:			{ styling.flavor_bar and card.rule_text_2 != "" and remove_tags(card.flavor_text_2) != "" }
 		render style:		image
-		image:				{ set_alpha(card_nameline(), alpha: get_alpha(styling.nameline_opacity_percentage, default: 100)) }
-	nameline pinlines:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			34
-		render style:		image
-		image:				{ card_nameline_pinlines() }
-	typeline:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			37
-		visible:			{ move_typeline() < 343 }
-		render style:		image
-		image:				{ set_alpha(card_typeline(), alpha: get_alpha(styling.typeline_opacity_percentage, default: 100)) }
-	typeline pinlines:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			36
-		visible:			{ move_typeline() < 343 }
-		render style:		image
-		image:				{ card_typeline_pinlines() }
-	textbox:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			31
-		render style:		image
-		image:				{ set_alpha(card_textbox(), alpha: get_alpha(styling.textbox_opacity_percentage, default: 80)) }
-		mask:				{ crop_safe("textboxpinlines_mask.png",	width: 750, height: 1046, offset_x: 0, offset_y: 1000-move_typeline()) }
-	textbox pinlines:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			32
-		render style:		image
-		image:				{ card_textboxpinlines() }
-		mask:				{ crop_safe("textboxpinlines_mask.png",	width: 750, height: 1046, offset_x: 0, offset_y: 1000-move_typeline()) }
-	textbox pinlines shadow:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			8
-		render style:		image
-		image:				textboxpinlines_shadow.png
-		mask:				{ crop_safe("textboxpinlines_mask.png",	width: 750, height: 1046, offset_x: 0, offset_y: 1000-move_typeline()) }
+		image:				flavor_bar.png
 	pt box:
 		left:				0
 		top:				0
 		width:				750
 		height:				1046
-		z index:			120
+		z index:			60
 		visible:			{ card.pt != "" }
 		render style:		image
 		image:
 			script:
 				pure := pure_colors()
 				count := length(pure)
-				if styling.PT_color_scheme == "gold" and count > 1 then template("m", type: "pt")
-				else if styling.PT_color_scheme == "hybrid" and count == 2 then masked_blend(mask: crop_safe("special_blend_pt.png", width: 750, height: 1046, offset_x: 0, offset_y: 1000-move_pt()), dark: template(pure.0, type: "pt"), light: template(pure.1, type: "pt"))
+				if is_vehicle() then "vpt.png"
+				else if styling.PT_color_scheme == "gold" and count > 1 then template("m", type: "pt")
+				else if styling.PT_color_scheme == "hybrid" and count == 2 then masked_blend(mask: "special_blend_pt.png", dark: template(pure.0, type: "pt"), light: template(pure.1, type: "pt"))
 				else card_ptbox()
 	foil layer:
 		left:				0
@@ -1055,6 +1053,25 @@ extra card style:
 		visible:			{ styling.overlay != "none" and styling.overlay != "" }
 		render style:		image
 		image:				{ if styling.overlay == "" then "" else styling.overlay + "/overlay.png" }
+		mask:				{ "foil_mask" + (if is_stamped() then "_rare" else "") + (if card.pt != "" then "_pt" else "") + (if is_crowned() then "_crown" else "") + ".png"}
+	land overlay:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			6
+		visible:			{ is_land() }
+		render style:		image
+		image:				loverlay.png
+	vehicle overlay:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			7
+		visible:			{ is_vehicle() }
+		render style:		image
+		image:				voverlay.png
 	alias box:
 		left:				0
 		top:				0
@@ -1073,49 +1090,55 @@ extra card style:
 		visible:			{ is_crowned() }
 		render style:		image
 		image:				{ card_crown() }
+	crown clear shadow:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			42
+		visible:			{ is_crowned() and is_clear() }
+		render style:		image
+		image:				shadow_clear_crown.png
 	crown border:
 		left:				0
 		top:				0
 		width:				750
 		height:				1046
 		z index:			40
-		visible:			{ is_crowned() and styling.border == "yes" }
+		visible:			{ is_crowned() }
 		mask:				crown_border_mask.png
-	card stamp pinlines:
+	book right:
 		left:				0
 		top:				0
 		width:				750
 		height:				1046
-		z index:			32
-		visible:			{ move_typeline() < 200 }
+		z index:			8
 		render style:		image
-		image:				{ if is_stamped() then card_stamp() else card_nonstamp() }
-	card stamp pinlines shadow:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			30
-		visible:			{ move_typeline() < 200 }
-		render style:		image
-		image:				{ if is_stamped() then "stamp_pinlines_shadow.png" else "nonstamp_pinlines_shadow.png" }
-	card stamp background:
-		left:				0
-		top:				0
-		width:				750
-		height:				1046
-		z index:			31
-		visible:			{ move_typeline() < 200 }
-		render style:		image
-		image:				{ set_alpha(if is_stamped() then card_stampbackground() else card_nonstampbackground(), alpha: get_alpha(styling.textbox_opacity_percentage, default: 80)) }
+		image:				{ card_bookright() }
 	card stamp border:
 		left:				0
 		top:				0
 		width:				750
 		height:				1046
-		z index:			31
-		visible:			{ styling.border != "no" }
-		mask:				{ if is_stamped() then "stamp_border_mask.png" else "nonstamp_border_mask.png" }
+		z index:			52
+		visible:			{ is_stamped() }
+		mask:				stamp_border_mask.png
+	card stamp rim:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			51
+		render style:		image
+		image:				{ if is_stamped() then card_stamp() else card_nonstamp() }
+	card stamp rim shadow:
+		left:				0
+		top:				0
+		width:				750
+		height:				1046
+		z index:			50
+		render style:		image
+		image:				{ if is_stamped() then "stamprim_shadow.png" else "nonstamprim_shadow.png" }
 	corners:
 		left:				0
 		top :				0
