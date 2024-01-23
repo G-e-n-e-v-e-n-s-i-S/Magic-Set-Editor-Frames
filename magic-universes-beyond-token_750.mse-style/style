@@ -1,4 +1,4 @@
-﻿mse version:		2.0.0
+﻿mse version:		2.1.2
 game:				magic
 short name:			UB Token
 full name:			Universes Beyond
@@ -40,7 +40,7 @@ card dpi:			300
 ############################################################## Extra scripts
 
 init script:
-	card_shape := { "token" }
+	card_shape := { if styling.count_as == "normal card" then "normal" else styling.count_as }
 	
 	template_prefix :=
 	[
@@ -428,6 +428,18 @@ styling field:
 	type:			text
 	name:			rarity coordinates
 	description:	The coordinates for the set symbol, formatted as "right,top,size". Default is 688,708,52.
+styling field:
+	type:			choice
+	name:			count as
+	description:	What should this card be counted as by the autocount script and stats page?
+	choice:			normal card
+	choice:			token
+	choice:			emblem
+	choice:			designation
+	choice:			rulestip
+	choice:			counter
+	choice:			checklist
+	initial:		normal card
 styling field:
 	type:			boolean
 	name:			remove from autocount
