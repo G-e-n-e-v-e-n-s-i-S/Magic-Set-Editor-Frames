@@ -166,7 +166,7 @@ init script:
 			else 1.0
 		)
 		else if styling.opacity_percentage == "100" then 1.0
-		else clamp(to_number(styling.opacity_percentage)/100, minimum: 0.0, maximum: 1.0)
+		else clamp(styling.opacity_percentage/100, minimum: 0.0, maximum: 1.0)
 	}
 	is_clear := { frame_alpha() <= 0.995 }
 	clear_mask :=
@@ -175,11 +175,11 @@ init script:
 		combine_blend(image1: recolor_image("clear_mask.png", color: rgb(grey,grey,grey)), image2: if is_crowned() then "opaque_crown_mask.png" else "opaque_mask.png", combine: "add")
 	}
 	
-	chop_top :=		{ split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(to_number(split.0), maximum:1000, minimum:-1000) else 0 }
-	chop_bottom :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(to_number(split.1), maximum:1000, minimum:-1000) else 0 }
+	chop_top :=		{ split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(split.0, maximum:1000, minimum:-1000) else 0 }
+	chop_bottom :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(split.1, maximum:1000, minimum:-1000) else 0 }
 	
-	shrink_type := { if styling.shrink_type_text != "" and styling.shrink_type_text != "-" then clamp(to_number(styling.shrink_type_text), maximum:24, minimum:-40) else 0 }
-	shrink_name := { if styling.shrink_name_text != "" and styling.shrink_name_text != "-" then clamp(to_number(styling.shrink_name_text), maximum:28, minimum:-40) else 0 }
+	shrink_type := { if styling.shrink_type_text != "" and styling.shrink_type_text != "-" then clamp(styling.shrink_type_text, maximum:24, minimum:-40) else 0 }
+	shrink_name := { if styling.shrink_name_text != "" and styling.shrink_name_text != "-" then clamp(styling.shrink_name_text, maximum:28, minimum:-40) else 0 }
 	
 	use_main_rarity := { contains(set.mainframe_rarity_name, match: ".png") }
 	
@@ -237,9 +237,10 @@ init script:
 	
 	clamp :=
 	{
-		if input < minimum then minimum
-		else if input > maximum then maximum
-		else input
+		number := to_number(input)
+		if number < minimum then minimum
+		else if number > maximum then maximum
+		else number
 	}
 	
 	a_saga := { true }
@@ -350,7 +351,7 @@ init script:
 		soft_line_counts := for x from 0 to active_count do [content_line_counts[x] - hard_line_counts[x] - 1]
 		text_desired_heights := for x from 0 to active_count do [hard_line_counts[x] * hard_line_height + soft_line_counts[x] * soft_line_height + last_line_height]
 		
-		chapter_spacing_importance := (if styling.chapter_spacing_percentage == "" then 70 else clamp(to_number(styling.chapter_spacing_percentage) or else 70, minimum: 0, maximum: 100)) / 100
+		chapter_spacing_importance := (if styling.chapter_spacing_percentage == "" then 70 else clamp(styling.chapter_spacing_percentage or else 70, minimum: 0, maximum: 100)) / 100
 		
 		textbox_desired_heights := for x from 0 to active_count do [max(text_desired_heights[x], chapter_spacing_importance * chaptertrain_desired_heights[x])]
 		

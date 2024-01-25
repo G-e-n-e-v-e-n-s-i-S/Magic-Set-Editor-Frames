@@ -107,8 +107,8 @@ init script:
 	
 	is_crowned		:= { styling.gatewatch_logo == "yes" or (styling.gatewatch_logo == "if legendary" and contains(to_lower(card.super_type), match:"legendary")) }
 	
-	shrink_type		:= { if styling.shrink_type_text == "-" then 0 else if styling.shrink_type_text != "" then clamp(to_number(styling.shrink_type_text), minimum: -30, maximum: 40) else 0 }
-	shrink_name		:= { if styling.shrink_name_text == "-" then 0 else if styling.shrink_name_text != "" then clamp(to_number(styling.shrink_name_text), minimum: -30, maximum: 46) else 0 }
+	shrink_type		:= { if styling.shrink_type_text == "-" then 0 else if styling.shrink_type_text != "" then clamp(styling.shrink_type_text, minimum: -30, maximum: 40) else 0 }
+	shrink_name		:= { if styling.shrink_name_text == "-" then 0 else if styling.shrink_name_text != "" then clamp(styling.shrink_name_text, minimum: -30, maximum: 46) else 0 }
 	
 	use_main_rarity	:= { contains(set.mainframe_rarity_name, match: ".png") }
 	
@@ -243,7 +243,7 @@ init script:
 		clamp((to_int(styling.move_baseball) or else 0), minimum: -250, maximum: 150)
 	}
 	
-	back_text_font_size := { if styling.back_text_font_size_cap == "" then 13 else clamp(to_number(styling.back_text_font_size_cap) or else 13, minimum: 2, maximum: 30) }
+	back_text_font_size := { if styling.back_text_font_size_cap == "" then 13 else clamp(styling.back_text_font_size_cap or else 13, minimum: 2, maximum: 30) }
 	
 	split_comma := split_text@(match: " *, *")
 	
@@ -251,9 +251,10 @@ init script:
 	
 	clamp :=
 	{
-		if input < minimum then minimum
-		else if input > maximum then maximum
-		else input
+		number := to_number(input)
+		if number < minimum then minimum
+		else if number > maximum then maximum
+		else number
 	}
 	
 	crop_safe :=
