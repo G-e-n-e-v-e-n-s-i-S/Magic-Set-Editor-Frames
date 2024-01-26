@@ -71,8 +71,8 @@ init script:
 	
 	is_unsorted		:= { styling.remove_from_autocount }
 
-	is_stamped		:= { card.card_stamp != "none" and (contains(styling.holofoil_stamps, match: "yes") or (styling.holofoil_stamps == "only rares and mythics" and is_rare()))}
-	is_foil_stamped	:= { styling.holofoil_stamps == "yes, all foil" or is_rare() }
+	is_stamped :=		{ card.card_stamp != "none" and (contains(styling.holofoil_stamps, match: "yes") or (styling.holofoil_stamps == "only rares and mythics" and is_rare()))}
+	is_foil_stamped :=	{ styling.holofoil_stamps == "yes, all foil" or is_rare() }
 	
 	is_crowned		:= { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and contains(to_lower(card.super_type), match:"legendary")) }
 	

@@ -51,6 +51,14 @@ init script:
 	card_crown			:= { color_background(type: "crown",	base_hybrid: card_hybrid)		}@(offset:0 )
 	card_ptbox			:= { color_background(type: "pt",		base_hybrid: card_hybrid)		}@(offset:0 )
 	card_stamp			:= { color_background(input: card.card_color, type: "stamp",	base_hybrid: card_hybrid)		}@(offset:0 )
+	card_stampholofoil :=
+	{
+		if not is_stamped() then "" else
+		"holofoil/" +
+		card.card_stamp +
+		(if is_foil_stamped() then "" else "_void") +
+		".png"
+	}
 	
 	mana_t := {
 		if      styling.tap_symbol == "old"        then "old"
@@ -694,9 +702,8 @@ extra card style:
 		width:				375
 		height:				523
 		z index:			3
-		visible:			{ is_stamped() }
 		render style:		image
-		image:				{ if card.card_stamp == "acorn" then "stamp_acorn_foil.png" else "stamp_normal_foil.png" }
+		image:				{ card_stampholofoil() }
 	corners:
 		left:				0
 		top :				0
