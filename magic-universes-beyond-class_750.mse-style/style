@@ -1,6 +1,6 @@
 ﻿mse version:		2.1.2
 game:				magic
-short name:			UB Class
+short name:			UB Class/Case
 full name:			Universes Beyond
 icon:				card_sample.png
 position hint:		095
@@ -250,19 +250,24 @@ init script:
 	
 	level_cost_left :=		{ 382 }
 	level_left :=			{ 534 }
-	level_width :=			{ if abilities_count() > input then 152 else 0 }
-	default_level_width :=	{ if abilities_count() > input and card["level_" + (input+1)] == "" then 152 else 0 }
+	level_width :=			{ if styling.separator_type == "line (Case)" then 0 else if abilities_count() > input then 152 else 0 }
+	default_level_width :=	{ if styling.separator_type == "line (Case)" then 0 else if abilities_count() > input and card["level_" + (input+1)] == "" then 152 else 0 }
 	level_font_size :=		{ 22 }
 	
-	separator_image :=		{ if styling.separator_notch then "level_separator_notch.png" else "level_separator.png" }
+	separator_image :=
+	{
+		if styling.separator_type == "line (Case)" then "flavor_bar.png"
+		else if styling.separator_notch then "level_separator_notch.png"
+		else "level_separator.png"
+	}
 	separator_move :=		{ clamp((to_int(pull_comma_array(styling.move_separators, cell:input-1, end:0, default:0)) or else 0), minimum: -500, maximum: 500) }
-	separator_left :=		{ 374 }
-	separator_width :=		{ 321 }
-	separator_height :=		{ clamp(49 - separator_shrink(), minimum: 5, maximum: 100) }
+	separator_left :=		{ if styling.separator_type == "line (Case)" then 409 else 374 }
+	separator_width :=		{ if styling.separator_type == "line (Case)" then 251 else 321 }
+	separator_height :=		{ clamp((if styling.separator_type == "line (Case)" then 8 else 49) - separator_shrink(), minimum: 5, maximum: 100) }
 	separator_top :=
 	{
 		if length(card_style.text.layout.separators) or else 0 > input-1
-		then card_style.text.top + card_style.text.layout.separators[input-1] - separator_height()/2 + separator_move(input)
+		then card_style.text.top + card_style.text.layout.separators[input-1] - separator_height()/2 + separator_move(input) - (if styling.separator_type == "line (Case)" then 2 else 0)
 		else 1500
 	}
 	separator_shrink := 
@@ -366,6 +371,13 @@ styling field:
 	choice:			6
 	choice:			7
 	initial:		3
+styling field:
+	type:			choice
+	name:			separator type
+	description:	Is the card a class or a case?
+	choice:			level (Class)
+	choice:			line (Case)
+	initial:		level (Class)
 styling field:
 	type:			text
 	name:			move separators
@@ -700,7 +712,7 @@ card style:
 			size:				{ font_size() }
 			scale down to:		12
 		line height hard:	{ if is_modal(card.chapter_text) then 0.9 else 1.2 }
-		line height line:	{ clamp(49 - separator_shrink()/2, minimum: 5, maximum: 100) * 0.055 }
+		line height line:	{ clamp((if styling.separator_type == "line (Case)" then 35 else 49) - separator_shrink()/2, minimum: 5, maximum: 100) * 0.055 }
 		line height soft:	0.9
 	level 9 text:
 		left:				{ level_cost_left() }
@@ -1017,13 +1029,6 @@ extra card field:
 	choice:				artist arrow
 extra card field:
 	type:				choice
-	name:				flavor bar
-	editable:			false
-	save value:			false
-	show statistics:	false
-	choice:				flavor bar
-extra card field:
-	type:				choice
 	name:				textbox
 	script:				card.card_color
 	editable:			false
@@ -1211,15 +1216,6 @@ extra card style:
 		z index:			100
 		render style:		image
 		image:				{ recolor_image("artist_arrow.png", color: styling.copyright_text_color) }
-	#flavor bar:
-	#	left:				{ separator_left() }
-	#	top:				{ text_top() - separator_height() }
-	#	width:				{ separator_width() }
-	#	height:				{ separator_height() }
-	#	z index:			710
-	#	visible:			{ styling.flavor_bar }
-	#	render style:		image
-	#	image:				flavor_bar.png
 	textbox:
 		left:				0
 		top:				0
