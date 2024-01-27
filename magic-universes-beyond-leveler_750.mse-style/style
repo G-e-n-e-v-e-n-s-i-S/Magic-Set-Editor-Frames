@@ -315,7 +315,7 @@ init script:
 	textbox_bottom :=		{ (if is_stamped() then 947 else 958) - chop_bottom() }
 	
 	separator_heights :=	{ 2 }		# may depend on an input
-	separator_move :=		{ clamp((to_int(pull_comma_array(styling.move_separators, cell:input-1, end:0, default:0)) or else 0), minimum: -500, maximum: 500) }
+	separator_move :=		{ split := split_comma(styling.move_separators); if length(split) > input-1 and split[input-1] != "" and split[input-1] != "-" then clamp(split[input-1], maximum:500, minimum:-500) else 0 }
 	
 	textbox_lefts :=
 	{
