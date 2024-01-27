@@ -750,7 +750,7 @@ card style:
 		line height line:	1.5
 		line height soft:	0.9
 		line height hard max:	{ if is_modal(card.rule_text) then 1.0 else 1.3 }
-		line height line max:	1.6
+		line height line max:	2.2
 		alignment:
 			script:
 				if (styling.center_rule_text == "short text only" and

@@ -437,8 +437,8 @@ styling field:
 	choice:			token
 	choice:			emblem
 	choice:			designation
-	choice:			rulestip
 	choice:			counter
+	choice:			rulestip
 	choice:			checklist
 	initial:		normal card
 styling field:
