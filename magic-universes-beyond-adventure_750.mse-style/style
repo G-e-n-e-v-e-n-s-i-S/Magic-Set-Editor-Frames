@@ -157,19 +157,19 @@ init script:
 	
 	is_aliased := { card.alias != "" }
 	
-	is_crowned := { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and contains(card.super_type, match:"Legendary")) }
+	is_crowned := { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and lang_setting("is_legendary")(card.super_type)) }
 	
-	is_land := { styling.land_frame == "yes" or (styling.land_frame == "if land" and contains(card.super_type, match:"Land")) }
+	is_land := { styling.land_frame == "yes" or (styling.land_frame == "if land" and lang_setting("is_land")(card.super_type)) }
 	
-	is_vehicle := { styling.vehicle_frame == "yes" or (styling.vehicle_frame == "if vehicle" and contains(card.sub_type, match:"Vehicle")) }
+	is_vehicle := { styling.vehicle_frame == "yes" or (styling.vehicle_frame == "if vehicle" and lang_setting("is_vehicle")(card.super_type)) }
 	
 	frame_alpha :=
 	{
 		if styling.opacity_percentage == "" then
 		(
 			if pure_colors(card.card_color) == ""
-			and	not contains(card.super_type, match:"Land")
-			and	not contains(card.super_type, match:"Artifact")
+			and	not lang_setting("is_land")(card.super_type)
+			and	not lang_setting("is_artifact")(card.super_type)
 			and	not contains(card.card_color, match:"artifact")
 			and	not contains(card.card_color, match:"land")
 			and	not contains(card.card_color, match:"hybrid")

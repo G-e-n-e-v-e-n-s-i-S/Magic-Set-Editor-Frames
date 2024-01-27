@@ -148,7 +148,7 @@ init script:
 	
 	is_aliased := { card.alias != "" }
 	
-	is_crowned := { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and contains(card.super_type, match:"Legendary")) }
+	is_crowned := { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and lang_setting("is_legendary")(card.super_type)) }
 	
 	is_pinlined := { styling.pinlines }
 	
