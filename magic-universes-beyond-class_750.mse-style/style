@@ -145,7 +145,7 @@ init script:
 	
 	is_land := { styling.land_frame == "yes" or (styling.land_frame == "if land" and lang_setting("is_land")(card.super_type)) }
 	
-	is_vehicle := { styling.vehicle_frame == "yes" or (styling.vehicle_frame == "if vehicle" and lang_setting("is_vehicle")(card.super_type)) }
+	is_vehicle := { styling.vehicle_frame == "yes" or (styling.vehicle_frame == "if vehicle" and lang_setting("is_vehicle")(card.sub_type)) }
 	
 	frame_alpha :=
 	{
