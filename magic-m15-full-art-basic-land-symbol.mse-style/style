@@ -505,16 +505,16 @@ card style:
 	border color:
 		left:				0
 		top :				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			100
 		visible:			{ styling.border != "no" }
 		mask:				{ if styling.border == "yes" then "mask_background_border.png" else "mask_background_borderless_border.png" }
 	card color:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			200
 		popup style:		in place
 		render style:		image
@@ -698,8 +698,8 @@ card style:
 	card stamp:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			720
 		render style:		image
 		popup style:		in place
@@ -952,8 +952,8 @@ extra card style:
 	card shadow:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			300
 		render style:		image
 		image:				{ "shadow_card" + (if is_basic_symboled() then "_basic" else "") + (if is_pinlined() then "_pinline" else "") + ".png" }
@@ -961,8 +961,8 @@ extra card style:
 	pinline:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			310
 		render style:		image
 		image:				{ card_pinline() }
@@ -970,8 +970,8 @@ extra card style:
 	basic land pinline:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			310
 		render style:		image
 		image:				{ if is_basic_symboled() then card_pinline() else "" }
@@ -979,16 +979,16 @@ extra card style:
 	basic land symbol:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			500
 		render style:		image
 		image:				{ if is_basic_symboled() then card_basicsymbol() else "" }
 	name box:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			500
 		render style:		image
 		image:				{ card_name() }
@@ -996,8 +996,8 @@ extra card style:
 	alias box:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			500
 		visible:			{ card.alias != "" }
 		render style:		image
@@ -1006,8 +1006,8 @@ extra card style:
 	alias shadow:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			300
 		visible:			{ card.alias != "" }
 		render style:		image
@@ -1015,16 +1015,16 @@ extra card style:
 	alias border:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			510
 		visible:			{ card.alias != "" }
 		mask:				mask_alias_border.png
 	type box:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			500
 		render style:		image
 		image:				{ card_type() }
@@ -1041,8 +1041,8 @@ extra card style:
 	pt box:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			810
 		visible:			{ card.pt != "" }
 		render style:		image
@@ -1057,8 +1057,8 @@ extra card style:
 	pt shadow:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			800
 		visible:			{ card.pt != "" }
 		render style:		image
@@ -1066,8 +1066,8 @@ extra card style:
 	crown:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			420
 		visible:			{ is_crowned() }
 		render style:		image
@@ -1076,8 +1076,8 @@ extra card style:
 	crown shadow:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			410
 		visible:			{ is_crowned() }
 		render style:		image
@@ -1085,8 +1085,8 @@ extra card style:
 	card stamp rim:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			310
 		visible:			{ is_stamped() }
 		render style:		image
@@ -1095,16 +1095,16 @@ extra card style:
 	card stamp background border:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			110
 		visible:			{ styling.border != "no" and is_stamped() }
 		mask:				{ if card.card_stamp == "universes beyond" then "mask_stamp_background_border_triangle.png" else "mask_stamp_background_border.png" }
 	card stamp shadow:
 		left:				0
 		top:				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			300
 		visible:			{ is_stamped() }
 		render style:		image
@@ -1112,8 +1112,8 @@ extra card style:
 	foil layer:
 		left:				0
 		top :				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			3000
 		visible:			{ styling.overlay != "none" and styling.overlay != "" }
 		render style:		image
@@ -1121,8 +1121,8 @@ extra card style:
 	corners:
 		left:				0
 		top :				0
-		width:				375
-		height:				523
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			4000
 		visible:			{ styling.corners != "none" }
 		mask:				{ if styling.corners == "rounded and antialiased" then "corners_rounded_antialiased_mask.png" else "corners_rounded_mask.png" }

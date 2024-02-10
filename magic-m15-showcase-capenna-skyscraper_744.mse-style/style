@@ -367,15 +367,15 @@ card style:
 	border color:
 		left:				0
 		top :				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			100
 		mask:				border_mask.png
 	card color:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			200
 		popup style:		in place
 		render style:		image
@@ -415,6 +415,7 @@ card style:
 		width:				{ if styling.stretch_art_to_whole_card then 744 else 610 }
 		height:				{ if styling.stretch_art_to_whole_card then 1039 else 457 }
 		z index:			0
+		mask:				{ if styling.stretch_art_to_whole_card then "image_mask_full.png" else "image_mask.png" }
 	mainframe image:
 		left:				{ popout_left() }
 		top:				{ popout_top() }
@@ -547,8 +548,8 @@ card style:
 	card stamp:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			620
 		render style:		image
 		popup style:		in place
@@ -718,8 +719,8 @@ extra card style:
 	crown:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			420
 		visible:			{ is_crowned() }
 		render style:		image
@@ -727,8 +728,8 @@ extra card style:
 	pt box:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			810
 		visible:			{ card.pt != "" }
 		render style:		image
@@ -742,8 +743,8 @@ extra card style:
 	pt shadow:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			800
 		visible:			{ card.pt != "" }
 		render style:		image
@@ -751,24 +752,24 @@ extra card style:
 	card stamp rim:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			610
 		render style:		image
 		image:				{ if is_stamped() then card_stamprim() else card_nonstamprim() }
 	card stamp border:
 		left:				0
 		top:				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			600
 		visible:			{ is_stamped() }
 		mask:				border_stamp_mask.png
 	foil layer:
 		left:				0
 		top :				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			3000
 		visible:			{ styling.overlay != "none" and styling.overlay != "" }
 		render style:		image
@@ -777,8 +778,8 @@ extra card style:
 	corners:
 		left:				0
 		top :				0
-		width:				744
-		height:				1039
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			4000
 		visible:			{ styling.corners != "none" }
 		mask:				{ if styling.corners == "rounded and antialiased" then "corners_rounded_antialiased_mask.png" else "corners_rounded_mask.png" }
