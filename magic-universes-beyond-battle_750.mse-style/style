@@ -507,17 +507,17 @@ card style:
 	############################# Background stuff
 	border color:
 		left:				0
-		top :				0
-		width:				1046
-		height:				750
+		top:				0
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			9
 		visible:			{ styling.border != "no" }
 		mask:				{ "border" + (if styling.border == "only copyright" then "_borderless" else "") + (if move_typeline() > 230 then "_textless" else "") + "_mask.png" }
 	card color:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			10
 		render style:		image
 		popup style:		in place
@@ -550,7 +550,6 @@ card style:
 		symbol font:
 			name:				{ styling.casting_cost_mana_symbols }
 			size:				30
-			#alignment:			middle right
 	alias:
 		left:				258
 		top:				101
@@ -565,10 +564,10 @@ card style:
 			weight:				bold
 	############################# Image
 	image:
-		left:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0		else if styling.border != "yes" then 85		else 85 }
-		top:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0		else if styling.border != "yes" then 0		else 30 }
-		width:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 1046	else if styling.border != "yes" then 961	else 932 }
-		height:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 750		else if styling.border != "yes"	then 750	else 690 }
+		left:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0					else if styling.border != "yes" then 85		else 85 }
+		top:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0					else if styling.border != "yes" then 0		else 30 }
+		width:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then styling.card_width	else if styling.border != "yes" then 961	else 932 }
+		height:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then styling.card_height	else if styling.border != "yes"	then 750	else 690 }
 		z index:			0
 	mainframe image:
 		left:				{ popout_left() }
@@ -718,8 +717,8 @@ card style:
 	card stamp:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			32
 		render style:		image
 		popup style:		in place
@@ -964,24 +963,24 @@ extra card style:
 	nameline:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			35
 		render style:		image
 		image:				{ set_alpha(card_nameline(), alpha: get_alpha(styling.nameline_opacity_percentage, default: 100)) }
 	nameline pinlines:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			34
 		render style:		image
 		image:				{ card_nameline_pinlines() }
 	typeline:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			37
 		visible:			{ move_typeline() < 315 }
 		render style:		image
@@ -989,8 +988,8 @@ extra card style:
 	typeline pinlines:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			36
 		visible:			{ move_typeline() < 315 }
 		render style:		image
@@ -998,8 +997,8 @@ extra card style:
 	textbox:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			31
 		render style:		image
 		image:				{ set_alpha(card_textbox(), alpha: get_alpha(styling.textbox_opacity_percentage, default: 100)) }
@@ -1007,8 +1006,8 @@ extra card style:
 	textbox pinlines:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			32
 		render style:		image
 		image:				{ card_textboxpinlines() }
@@ -1016,8 +1015,8 @@ extra card style:
 	textbox pinlines shadow:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			8
 		render style:		image
 		image:				textboxpinlines_shadow.png
@@ -1025,8 +1024,8 @@ extra card style:
 	pt box:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			120
 		visible:			{ card.pt != "" }
 		render style:		image
@@ -1040,17 +1039,17 @@ extra card style:
 	loyalty box:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			120
 		visible:			{ card.loyalty != "" }
 		render style:		image
 		image:				defense_box.png
 	foil layer:
 		left:				0
-		top :				0
-		width:				1046
-		height:				750
+		top:				0
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			3000
 		visible:			{ styling.overlay != "none" and styling.overlay != "" }
 		render style:		image
@@ -1058,8 +1057,8 @@ extra card style:
 	alias box:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			40
 		visible:			{ is_aliased() }
 		render style:		image
@@ -1067,8 +1066,8 @@ extra card style:
 	crown:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			41
 		visible:			{ is_crowned() }
 		render style:		image
@@ -1076,24 +1075,24 @@ extra card style:
 	crown border:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			40
 		visible:			{ is_crowned() and styling.border == "yes" }
 		mask:				crown_border_mask.png
 	card stamp border:
 		left:				0
 		top:				0
-		width:				1046
-		height:				750
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			31
 		visible:			{ styling.border != "no" and is_stamped() }
 		mask:				stamp_border_mask.png
 	corners:
 		left:				0
-		top :				0
-		width:				1046
-		height:				750
+		top:				0
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			4000
 		visible:			{ styling.corners != "none" }
 		mask:				{ if styling.corners == "rounded and antialiased" then "corners_rounded_antialiased_mask.png" else "corners_rounded_mask.png" }

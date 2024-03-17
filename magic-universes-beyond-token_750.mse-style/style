@@ -48,6 +48,7 @@ init script:
 		textbox:			"textbox/",
 		textboxpinlines:	"textboxpinlines/",
 		crown:				"crown/",
+		crowntoken:			"crowntoken/",
 		nameline:			"nameline/",
 		stamp:				"stamp/",
 		nonstamp:			"nonstamp/",
@@ -61,6 +62,7 @@ init script:
 		textbox:			"textbox.png",
 		textboxpinlines:	"textboxpinlines.png",
 		crown:				"crown.png",
+		crowntoken:			"crown.png",
 		nameline:			"nameline.png",
 		stamp:				"stamp.png",
 		nonstamp:			"nonstamp.png",
@@ -90,6 +92,7 @@ init script:
 	card_textboxpinlines :=		{ color_background(input: card.card_color, type: "textboxpinlines",		base_hybrid: card_hybrid)		}@(offset:0 )
 	card_ptbox :=				{ color_background(input: card.card_color, type: "pt",					base_hybrid: card_hybrid)		}@(offset:0 )
 	card_crown :=				{ color_background(input: card.card_color, type: "crown",				base_hybrid: card_hybrid)		}@(offset:0 )
+	card_crowntoken :=			{ color_background(input: card.card_color, type: "crowntoken",			base_hybrid: card_hybrid)		}@(offset:0 )
 	card_nameline :=			{ color_background(input: card.card_color, type: "nameline",			base_hybrid: card_hybrid)		}@(offset:0 )
 	card_typeline :=			{ color_background(input: card.card_color, type: "typeline",			base_hybrid: card_hybrid)		}@(offset:0 )
 	card_nameline_pinlines :=	{ color_background(input: card.card_color, type: "nameline_pinlines",	base_hybrid: card_hybrid)		}@(offset:0 )
@@ -149,7 +152,7 @@ init script:
 	
 	is_aliased := { card.alias != "" }
 	
-	is_crowned := { styling.legend_crown == "yes" or (styling.legend_crown == "if legendary" and lang_setting("is_legendary")(card.super_type)) }
+	is_crowned := { styling.legend_crown == "yes" or styling.legend_crown == "token" or styling.legend_crown == "full art" or (contains(styling.legend_crown, match: "if legendary") and lang_setting("is_legendary")(card.super_type)) }
 	
 	chop_top :=		{ split := split_comma(styling.chop_rule_textbox); if length(split) > 0 and split.0 != "" and split.0 != "-" then clamp(split.0, maximum:1000, minimum:-1000) else 0 }
 	chop_bottom :=	{ split := split_comma(styling.chop_rule_textbox); if length(split) > 1 and split.1 != "" and split.1 != "-" then clamp(split.1, maximum:1000, minimum:-1000) else 0 }
@@ -326,10 +329,12 @@ styling field:
 	type:			choice
 	name:			legend crown
 	description:	Use the legend crown?
-	choice:			yes
-	choice:			if legendary
+	choice:			token
+	choice:			token if legendary
+	choice:			full art
+	choice:			full art if legendary
 	choice:			no
-	initial:		if legendary
+	initial:		token if legendary
 styling field:
 	type:			text
 	name:			nameline opacity percentage
@@ -534,17 +539,17 @@ card style:
 	############################# Background stuff
 	border color:
 		left:				0
-		top :				0
-		width:				750
-		height:				1046
+		top:				0
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			9
 		visible:			{ styling.border != "no" }
 		mask:				{ "border" + (if styling.border == "only copyright" then "_borderless" else "") + (if move_typeline() > 220 then "_textless" else "") + "_mask.png" }
 	card color:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			10
 		render style:		image
 		popup style:		in place
@@ -577,25 +582,24 @@ card style:
 		symbol font:
 			name:				{ styling.casting_cost_mana_symbols }
 			size:				30
-			#alignment:			middle right
 	alias:
-		left:				108
-		top:				116
-		right:				641
-		height:				28
+		left:				{ 108 + if is_crowned() and contains(styling.legend_crown, match: "token") then 40 else 0 }
+		top:				{ 115 + if is_crowned() and contains(styling.legend_crown, match: "token") then 2 else 0 }
+		right:				{ 641 - if is_crowned() and contains(styling.legend_crown, match: "token") then 40 else 0 }
+		height:				{ 28 - if is_crowned() and contains(styling.legend_crown, match: "token") then 2 else 0 }
 		z index:			300
 		alignment:			middle center shrink-overflow
 		font:
 			name:				MPlantin-Italic
-			size:				18
+			size:				{ if is_crowned() and contains(styling.legend_crown, match: "token") then 17 else 18 }
 			color:				white
 			weight:				bold
 	############################# Image
 	image:
-		left:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0		else if styling.border != "yes" then 0		else 30 }
-		top:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0		else if styling.border != "yes" then 0		else if get_alpha(styling.nameline_opacity_percentage, default: 70) > 0.98 and styling.border == "yes" and is_crowned() then 114 else 29 }
-		width:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 750		else if styling.border != "yes" then 750	else 690 }
-		height:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 1046	else if styling.border != "yes"	then 973	else if get_alpha(styling.nameline_opacity_percentage, default: 70) > 0.98 and styling.border == "yes" and is_crowned() then 859 else 944 }
+		left:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0						else if styling.border != "yes" then 0		else 30 }
+		top:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then 0						else if styling.border != "yes" then 0		else if get_alpha(styling.nameline_opacity_percentage, default: 70) > 0.98 and styling.border == "yes" and is_crowned() then 114 else 29 }
+		width:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then stylesheet.card_width	else if styling.border != "yes" then 750	else 690 }
+		height:				{ if styling.stretch_image_to_whole_card or styling.border == "no" then stylesheet.card_height	else if styling.border != "yes"	then 973	else if get_alpha(styling.nameline_opacity_percentage, default: 70) > 0.98 and styling.border == "yes" and is_crowned() then 859 else 944 }
 		z index:			0
 	mainframe image:
 		left:				{ popout_left() }
@@ -731,8 +735,8 @@ card style:
 	card stamp:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			32
 		render style:		image
 		popup style:		in place
@@ -986,24 +990,24 @@ extra card style:
 	nameline:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			35
 		render style:		image
 		image:				{ set_alpha(card_nameline(), alpha: get_alpha(styling.nameline_opacity_percentage, default: 100)) }
 	nameline pinlines:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			34
 		render style:		image
 		image:				{ card_nameline_pinlines() }
 	typeline:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			37
 		visible:			{ move_typeline() < 343 }
 		render style:		image
@@ -1011,8 +1015,8 @@ extra card style:
 	typeline pinlines:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			36
 		visible:			{ move_typeline() < 343 }
 		render style:		image
@@ -1020,8 +1024,8 @@ extra card style:
 	textbox:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			31
 		render style:		image
 		image:				{ set_alpha(card_textbox(), alpha: get_alpha(styling.textbox_opacity_percentage, default: 80)) }
@@ -1029,8 +1033,8 @@ extra card style:
 	textbox pinlines:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			32
 		render style:		image
 		image:				{ card_textboxpinlines() }
@@ -1038,8 +1042,8 @@ extra card style:
 	textbox pinlines shadow:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			8
 		render style:		image
 		image:				textboxpinlines_shadow.png
@@ -1047,8 +1051,8 @@ extra card style:
 	pt box:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			120
 		visible:			{ card.pt != "" }
 		render style:		image
@@ -1061,9 +1065,9 @@ extra card style:
 				else card_ptbox()
 	foil layer:
 		left:				0
-		top :				0
-		width:				750
-		height:				1046
+		top:				0
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			3000
 		visible:			{ styling.overlay != "none" and styling.overlay != "" }
 		render style:		image
@@ -1071,8 +1075,8 @@ extra card style:
 	alias box:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			40
 		visible:			{ is_aliased() }
 		render style:		image
@@ -1080,25 +1084,25 @@ extra card style:
 	crown:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			41
 		visible:			{ is_crowned() }
 		render style:		image
-		image:				{ card_crown() }
+		image:				{ if contains(styling.legend_crown, match: "full art") then card_crown() else card_crowntoken() }
 	crown border:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			40
 		visible:			{ is_crowned() and styling.border == "yes" }
 		mask:				crown_border_mask.png
 	card stamp pinlines:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			32
 		visible:			{ move_typeline() < 200 }
 		render style:		image
@@ -1106,8 +1110,8 @@ extra card style:
 	card stamp pinlines shadow:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			30
 		visible:			{ move_typeline() < 200 }
 		render style:		image
@@ -1115,8 +1119,8 @@ extra card style:
 	card stamp background:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			31
 		visible:			{ move_typeline() < 200 }
 		render style:		image
@@ -1124,16 +1128,16 @@ extra card style:
 	card stamp border:
 		left:				0
 		top:				0
-		width:				750
-		height:				1046
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			31
 		visible:			{ styling.border != "no" }
 		mask:				{ if is_stamped() then "stamp_border_mask.png" else "nonstamp_border_mask.png" }
 	corners:
 		left:				0
-		top :				0
-		width:				750
-		height:				1046
+		top:				0
+		width:				{ stylesheet.card_width }
+		height:				{ stylesheet.card_height }
 		z index:			4000
 		visible:			{ styling.corners != "none" }
 		mask:				{ if styling.corners == "rounded and antialiased" then "corners_rounded_antialiased_mask.png" else "corners_rounded_mask.png" }
