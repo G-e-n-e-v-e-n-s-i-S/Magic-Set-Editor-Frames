@@ -45,10 +45,10 @@ init script:
 	# adventure version of card hybrid
 	adventure_hybrid_cell :=
 	{
-		do_linear_blend	:= linear_blend
+		normal_linear_blend	:= linear_blend
 		linear_blend :=
 		{
-			do_linear_blend(
+			normal_linear_blend(
 				x1: 0.457*x1 + 0.048,
 				x2: 0.457*x2 + 0.048,
 				y1: 0.304*y1 + 0.62,
