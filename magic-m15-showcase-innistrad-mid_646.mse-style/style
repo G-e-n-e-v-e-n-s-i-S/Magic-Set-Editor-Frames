@@ -385,7 +385,7 @@ card style:
 	############################# Background stuff
 	border color:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		left width:			44
@@ -430,7 +430,6 @@ card style:
 		symbol font:
 			name:				{ styling.casting_cost_mana_symbols }
 			size:				26
-			#alignment:			middle right
 	############################# Image
 	image:
 		left:
@@ -816,7 +815,7 @@ extra card style:
 		mask:				crown_mask.png
 	foil layer:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			3000
@@ -861,7 +860,7 @@ extra card style:
 		mask:				text_mask.png
 	corners:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			4000

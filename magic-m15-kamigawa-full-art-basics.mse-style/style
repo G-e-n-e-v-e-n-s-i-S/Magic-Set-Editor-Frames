@@ -306,10 +306,10 @@ card style:
 			color:				{ if styling.hide_name_text then rgba(0,0,0,0) else styling.text_color }
 	############################# Image
 	image:
-		left:				{ if styling.stretch_art_to_whole_card then 0						else if styling.border != "yes" then 0						else 15 }
-		top:				{ if styling.stretch_art_to_whole_card then 0						else if styling.border != "yes" then 0						else 15 }
-		width:				{ if styling.stretch_art_to_whole_card then stylesheet.card_width	else if styling.border != "yes" then stylesheet.card_width	else 345 }
-		bottom:				{ if styling.stretch_art_to_whole_card then 524						else if styling.border != "no"	then 481					else 524 }
+		left:				{ if styling.stretch_art_to_whole_card then 0							else if styling.border != "yes" then 0						else 15 }
+		top:				{ if styling.stretch_art_to_whole_card then 0							else if styling.border != "yes" then 0						else 15 }
+		width:				{ if styling.stretch_art_to_whole_card then stylesheet.card_width		else if styling.border != "yes" then stylesheet.card_width	else 345 }
+		bottom:				{ if styling.stretch_art_to_whole_card then stylesheet.card_height + 1	else if styling.border != "no"	then 481					else stylesheet.card_height + 1 }
 		z index:			0
 	mainframe image:
 		left:				{ popout_left() }

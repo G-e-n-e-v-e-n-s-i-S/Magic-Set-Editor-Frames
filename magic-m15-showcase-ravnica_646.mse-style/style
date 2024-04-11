@@ -356,7 +356,7 @@ card style:
 	############################# Background stuff
 	border color:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		left width:			40
@@ -401,13 +401,12 @@ card style:
 		symbol font:
 			name:				{ styling.casting_cost_mana_symbols }
 			size:				26
-			#alignment:			middle right
 	############################# Image
 	image:
-		left:				{ if styling.stretch_image_to_whole_card then 0 else 48 }
-		top:				{ if styling.stretch_image_to_whole_card then 0 else 102 }
-		width:				{ if styling.stretch_image_to_whole_card then 646 else 549 }
-		height:				{ if styling.stretch_image_to_whole_card then 902 else 395 }
+		left:				{ if styling.stretch_image_to_whole_card then 0							else 48 }
+		top:				{ if styling.stretch_image_to_whole_card then 0							else 102 }
+		width:				{ if styling.stretch_image_to_whole_card then stylesheet.card_width		else 549 }
+		height:				{ if styling.stretch_image_to_whole_card then stylesheet.card_height	else 395 }
 		z index:			10
 		mask:				{ if styling.stretch_image_to_whole_card then "image_mask_full.png" else "image_mask.png" }
 	mainframe image:
@@ -733,7 +732,7 @@ extra card style:
 		mask:				crown_mask.png
 	foil layer:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			3000
@@ -760,7 +759,7 @@ extra card style:
 		image:				stamp_background.png
 	corners:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			4000

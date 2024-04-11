@@ -366,7 +366,7 @@ card style:
 	############################# Background stuff
 	border color:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			100
@@ -410,10 +410,10 @@ card style:
 			size:				30
 	############################# Image
 	image:
-		left:				{ if styling.stretch_art_to_whole_card then 0 else 67 }
-		top:				{ if styling.stretch_art_to_whole_card then 0 else 118 }
-		width:				{ if styling.stretch_art_to_whole_card then 744 else 610 }
-		height:				{ if styling.stretch_art_to_whole_card then 1039 else 457 }
+		left:				{ if styling.stretch_art_to_whole_card then 0						else 67 }
+		top:				{ if styling.stretch_art_to_whole_card then 0						else 118 }
+		width:				{ if styling.stretch_art_to_whole_card then stylesheet.card_width	else 610 }
+		height:				{ if styling.stretch_art_to_whole_card then stylesheet.card_height	else 457 }
 		z index:			0
 		mask:				{ if styling.stretch_art_to_whole_card then "image_mask_full.png" else "image_mask.png" }
 	mainframe image:
@@ -767,7 +767,7 @@ extra card style:
 		mask:				border_stamp_mask.png
 	foil layer:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			3000
@@ -777,7 +777,7 @@ extra card style:
 		mask:				{ "foil_mask" + (if is_stamped() then "_rare" else "") + (if card.pt != "" then "_pt" else "") + (if is_crowned() then "_crown" else "") + ".png"}
 	corners:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			4000

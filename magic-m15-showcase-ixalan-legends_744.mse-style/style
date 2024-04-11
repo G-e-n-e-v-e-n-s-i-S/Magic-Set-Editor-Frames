@@ -399,7 +399,7 @@ card style:
 	############################# Background stuff
 	border color:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			100
@@ -443,10 +443,10 @@ card style:
 			size:				30
 	############################# Image
 	image:
-		left:				{ if styling.art_layout == "normal (Stretched to whole card)" then 0	else if styling.art_layout == "extended art" then 30	else if styling.art_layout == "extended art (Landscape)" then 30	else 49 }
-		top:				{ if styling.art_layout == "normal (Stretched to whole card)" then 0	else if styling.art_layout == "extended art" then 30	else if styling.art_layout == "extended art (Landscape)" then 30	else 121 }
-		width:				{ if styling.art_layout == "normal (Stretched to whole card)" then 744	else if styling.art_layout == "extended art" then 684	else if styling.art_layout == "extended art (Landscape)" then 684	else 648 }
-		height:				{ if styling.art_layout == "normal (Stretched to whole card)" then 1039	else if styling.art_layout == "extended art" then 884	else if styling.art_layout == "extended art (Landscape)" then 545	else 454 }
+		left:				{ if styling.art_layout == "normal (Stretched to whole card)" then 0						else if styling.art_layout == "extended art" then 30	else if styling.art_layout == "extended art (Landscape)" then 30	else 49 }
+		top:				{ if styling.art_layout == "normal (Stretched to whole card)" then 0						else if styling.art_layout == "extended art" then 30	else if styling.art_layout == "extended art (Landscape)" then 30	else 121 }
+		width:				{ if styling.art_layout == "normal (Stretched to whole card)" then stylesheet.card_width	else if styling.art_layout == "extended art" then 684	else if styling.art_layout == "extended art (Landscape)" then 684	else 648 }
+		height:				{ if styling.art_layout == "normal (Stretched to whole card)" then stylesheet.card_height	else if styling.art_layout == "extended art" then 884	else if styling.art_layout == "extended art (Landscape)" then 545	else 454 }
 		z index:			130
 		mask:				{ if styling.art_layout == "normal (Stretched to whole card)" then "image_mask_full.png" else if styling.art_layout == "extended art" then "image_mask_extended.png" else if styling.art_layout == "extended art (Landscape)" then "image_mask_extended_landscape.png" else "" }
 	mainframe image:
@@ -817,7 +817,7 @@ extra card style:
 		mask:				border_stamp_mask.png
 	foil layer:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			3000
@@ -827,7 +827,7 @@ extra card style:
 		mask:				{ "foil_mask" + (if is_stamped() then "_rare" else "") + (if card.pt != "" then "_pt" else "") + (if is_crowned() then "_crown" else "") + ".png" }
 	corners:
 		left:				0
-		top :				0
+		top:				0
 		width:				{ stylesheet.card_width }
 		height:				{ stylesheet.card_height }
 		z index:			4000
