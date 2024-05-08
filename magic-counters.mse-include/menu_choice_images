@@ -1,0 +1,48 @@
+choice images:
+	none:           /magic-counters.mse-include/menu/none.png
+	+1/+1:          /magic-counters.mse-include/menu/+1+1.png
+	-1/-1:          /magic-counters.mse-include/menu/-1-1.png
+	acorn:          /magic-counters.mse-include/menu/acorn.png
+	aether:         /magic-counters.mse-include/menu/aether.png
+	arrow:          /magic-counters.mse-include/menu/arrow.png
+	awakening:      /magic-counters.mse-include/menu/awakening.png
+	bounty:         /magic-counters.mse-include/menu/bounty.png
+	charge:         /magic-counters.mse-include/menu/charge.png
+	corpse:         /magic-counters.mse-include/menu/corpse.png
+	deathtouch alt: /magic-counters.mse-include/menu/deathtouch alt.png
+	deathtouch:     /magic-counters.mse-include/menu/deathtouch.png
+	defender:       /magic-counters.mse-include/menu/defender.png
+	doom:           /magic-counters.mse-include/menu/doom.png
+	double strike:  /magic-counters.mse-include/menu/double strike.png
+	egg:            /magic-counters.mse-include/menu/egg.png
+	energy:         /magic-counters.mse-include/menu/energy.png
+	finality:       /magic-counters.mse-include/menu/finality.png
+	first strike:   /magic-counters.mse-include/menu/first strike.png
+	flame:          /magic-counters.mse-include/menu/flame.png
+	flood:          /magic-counters.mse-include/menu/flood.png
+	flying:         /magic-counters.mse-include/menu/flying.png
+	goaded:         /magic-counters.mse-include/menu/goaded.png
+	haste:          /magic-counters.mse-include/menu/haste.png
+	hexproof alt:   /magic-counters.mse-include/menu/hexproof alt.png
+	hexproof:       /magic-counters.mse-include/menu/hexproof.png
+	indestructible: /magic-counters.mse-include/menu/indestructible.png
+	lifelink alt:   /magic-counters.mse-include/menu/lifelink alt.png
+	lifelink:       /magic-counters.mse-include/menu/lifelink.png
+	lore:           /magic-counters.mse-include/menu/lore.png
+	menace:         /magic-counters.mse-include/menu/menace.png
+	oil:            /magic-counters.mse-include/menu/oil.png
+	omen:           /magic-counters.mse-include/menu/omen.png
+	poison:         /magic-counters.mse-include/menu/poison.png
+	rad:            /magic-counters.mse-include/menu/rad.png
+	reach:          /magic-counters.mse-include/menu/reach.png
+	shield:         /magic-counters.mse-include/menu/shield.png
+	solved:         /magic-counters.mse-include/menu/solved.png
+	spore:          /magic-counters.mse-include/menu/spore.png
+	stun:           /magic-counters.mse-include/menu/stun.png
+	suspected:      /magic-counters.mse-include/menu/suspected.png
+	ticket:         /magic-counters.mse-include/menu/ticket.png
+	time:           /magic-counters.mse-include/menu/time.png
+	trample:        /magic-counters.mse-include/menu/trample.png
+	unlock:         /magic-counters.mse-include/menu/unlock.png
+	vigilance:      /magic-counters.mse-include/menu/vigilance.png
+	void:           /magic-counters.mse-include/menu/void.png

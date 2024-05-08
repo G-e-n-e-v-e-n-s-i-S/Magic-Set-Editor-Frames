@@ -1,0 +1,48 @@
+choice images:
+	none:           /magic-counters.mse-include/none.png
+	+1/+1:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/+1+1.png") }
+	-1/-1:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/-1-1.png") }
+	acorn:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/acorn.png") }
+	aether:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/aether.png") }
+	arrow:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/arrow.png") }
+	awakening:      { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/awakening.png") }
+	bounty:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/bounty.png") }
+	charge:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/charge.png") }
+	corpse:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/corpse.png") }
+	deathtouch alt: { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/deathtouch alt.png") }
+	deathtouch:     { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/deathtouch.png") }
+	defender:       { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/defender.png") }
+	doom:           { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/doom.png") }
+	double strike:  { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/double strike.png") }
+	egg:            { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/egg.png") }
+	energy:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/energy.png") }
+	finality:       { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/finality.png") }
+	first strike:   { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/first strike.png") }
+	flame:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/flame.png") }
+	flood:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/flood.png") }
+	flying:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/flying.png") }
+	goaded:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/goaded.png") }
+	haste:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/haste.png") }
+	hexproof alt:   { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/hexproof alt.png") }
+	hexproof:       { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/hexproof.png") }
+	indestructible: { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/indestructible.png") }
+	lifelink alt:   { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/lifelink alt.png") }
+	lifelink:       { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/lifelink.png") }
+	lore:           { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/lore.png") }
+	menace:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/menace.png") }
+	oil:            { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/oil.png") }
+	omen:           { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/omen.png") }
+	poison:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/poison.png") }
+	rad:            { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/rad.png") }
+	reach:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/reach.png") }
+	shield:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/shield.png") }
+	solved:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/solved.png") }
+	spore:          { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/spore.png") }
+	stun:           { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/stun.png") }
+	suspected:      { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/suspected.png") }
+	ticket:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/ticket.png") }
+	time:           { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/time.png") }
+	trample:        { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/trample.png") }
+	unlock:         { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/unlock.png") }
+	vigilance:      { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/vigilance.png") }
+	void:           { recolor_image(color: styling.symbol_color or else rgb(255,255,255), "/magic-counters.mse-include/void.png") }
